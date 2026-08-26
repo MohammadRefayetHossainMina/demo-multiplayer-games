@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dual Fire | Kill to Survive</title>
+    <meta
+      name="description"
+      content="Dual Fire is a dark tactical 1v1 FPS demo. Default guns only. Learn the world. Tournament details will be announced when the game is ready commercially."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="logo" href="#hero">DUAL<span>FIRE</span></a>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#hero">Drop In</a></li>
+          <li><a href="#loadout">Loadout</a></li>
+          <li><a href="#intel">Intel</a></li>
+          <li><a href="#tournament">Tournament</a></li>
+          <li><a href="#views">Views</a></li>
+        </ul>
+      </nav>
+      <p class="live-pill"><span class="pulse"></span> Demo live</p>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <img
+          class="hero-art"
+          src="images/hero-ops.png"
+          alt="Two operators facing off on a rain-soaked industrial street at night"
+        />
+        <div class="hero-shade"></div>
+        <div class="hud-frame" aria-hidden="true"></div>
+
+        <div class="hero-content">
+          <p class="eyebrow">Online two-player shooter · Equal kit</p>
+          <h1>Dual Fire</h1>
+          <p class="tagline">Kill to survive.</p>
+          <p class="hero-copy">
+            Not a 5v5 circus. Not a store-badge landing page. One sector. Two
+            operators. Default guns only. Keep coming back, play the demo, and
+            share your view so we can push Dual Fire toward 99%.
+          </p>
+          <div class="hero-actions">
+            <button type="button" id="play-demo-btn" class="btn-primary">
+              Play Demo
+            </button>
+            <a class="btn-secondary" href="#views">Share your view</a>
+          </div>
+          <ul class="stat-row">
+            <li><strong>1v1</strong><span>Tactical FPS</span></li>
+            <li><strong>3</strong><span>Default guns</span></li>
+            <li><strong>$1K</strong><span>Planned purse</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="demo" class="sr-only-target" aria-hidden="true"></section>
+
+      <div id="demo-briefing" class="demo-briefing" hidden>
+        <div class="briefing-panel panel">
+          <p class="eyebrow">Ops briefing // demo access</p>
+          <h2>You drop with what command issued.</h2>
+          <p>
+            Demo facilities only. No unlocks. No paid skins. Both operators
+            spawn with the same starter rifle, sidearm, and close-quarters kit.
+            Survive the duel.
+          </p>
+          <ul class="briefing-list">
+            <li>Default rifle, pistol, and CQC option</li>
+            <li>Standard map facilities — no elite rooms</li>
+            <li>Two operators. One still standing.</li>
+          </ul>
+          <button type="button" class="btn-secondary" id="close-briefing-btn">
+            Close briefing
+          </button>
+        </div>
+      </div>
+
+      <section class="modes">
+        <div class="section-head">
+          <p class="eyebrow">Rules of engagement</p>
+          <h2>One mode. No clutter.</h2>
+        </div>
+        <div class="mode-grid">
+          <article class="mode-card is-featured">
+            <p class="mode-kicker">Primary</p>
+            <h3>Kill to Survive</h3>
+            <p>
+              Both operators enter the same night sector. Rounds end when one
+              cannot continue. Ammo is counted. Corners are fatal.
+            </p>
+          </article>
+          <article class="mode-card">
+            <p class="mode-kicker">Demo lock</p>
+            <h3>Equal loadout</h3>
+            <p>
+              Skill decides the fight. The demo strips cosmetics and paid power
+              so every duel starts honest.
+            </p>
+          </article>
+          <article class="mode-card">
+            <p class="mode-kicker">Not live</p>
+            <h3>Prize bracket</h3>
+            <p>
+              Tournament is inactive. We will inform everyone once the game is
+              ready for commercial release.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="loadout" class="loadout">
+        <div class="section-head">
+          <p class="eyebrow">Issued kit</p>
+          <h2>Default loadout</h2>
+          <p class="section-intro">
+            Inspect the three guns you actually get. Click a thumbnail — the
+            stage and telemetry update instantly.
+          </p>
+        </div>
+
+        <div class="loadout-grid">
+          <figure class="weapon-stage-wrap panel">
+            <img
+              id="weapon-stage"
+              src="images/weapon-rifle.png"
+              alt="Tactical demo rifle in low light, the default primary weapon"
+            />
+            <figcaption>
+              <span class="cap-label">Active issue</span>
+              <span id="weapon-name">DF-R1 Issue Rifle</span>
+            </figcaption>
+          </figure>
+
+          <div class="weapon-telemetry panel">
+            <p class="eyebrow">Telemetry</p>
+            <div class="meter">
+              <span>Damage</span>
+              <div class="bar"><i id="stat-damage" style="width: 78%"></i></div>
+            </div>
+            <div class="meter">
+              <span>Range</span>
+              <div class="bar"><i id="stat-range" style="width: 82%"></i></div>
+            </div>
+            <div class="meter">
+              <span>Rate</span>
+              <div class="bar"><i id="stat-rate" style="width: 54%"></i></div>
+            </div>
+            <p id="weapon-note" class="weapon-note">
+              Demo primary. Mid-range lanes. Count every burst.
+            </p>
+          </div>
+        </div>
+
+        <div class="weapon-thumbs">
+          <button
+            type="button"
+            class="weapon-thumb is-active"
+            data-weapon="rifle"
+            data-image="images/weapon-rifle.png"
+            data-name="DF-R1 Issue Rifle"
+            data-alt="Tactical demo rifle in low light, the default primary weapon"
+            data-damage="78"
+            data-range="82"
+            data-rate="54"
+            data-note="Demo primary. Mid-range lanes. Count every burst."
+          >
+            <img src="images/weapon-rifle.png" alt="Thumbnail of the default issue rifle" />
+            <span>Rifle</span>
+          </button>
+          <button
+            type="button"
+            class="weapon-thumb"
+            data-weapon="pistol"
+            data-image="images/weapon-pistol.png"
+            data-name="DF-P9 Sidearm"
+            data-alt="Compact tactical pistol, the default demo sidearm"
+            data-damage="52"
+            data-range="40"
+            data-rate="48"
+            data-note="Last-resort sidearm. Close, honest, unforgiving."
+          >
+            <img src="images/weapon-pistol.png" alt="Thumbnail of the default demo pistol" />
+            <span>Pistol</span>
+          </button>
+          <button
+            type="button"
+            class="weapon-thumb"
+            data-weapon="smg"
+            data-image="images/weapon-smg.png"
+            data-name="DF-C2 CQC Kit"
+            data-alt="Close-quarters submachine gun issued in the demo"
+            data-damage="61"
+            data-range="45"
+            data-rate="88"
+            data-note="Interior fights. High rate. Do not spray blind."
+          >
+            <img src="images/weapon-smg.png" alt="Thumbnail of the default close-quarters gun" />
+            <span>CQC</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="intel" class="intel">
+        <div class="section-head">
+          <p class="eyebrow">Classified</p>
+          <h2>Intel files</h2>
+          <p class="section-intro">
+            Open a file. This world is night ops, tight corridors, and one life
+            that matters.
+          </p>
+        </div>
+
+        <div class="intel-grid">
+          <article class="intel-card panel">
+            <h3>FILE 01 — The rule</h3>
+            <button type="button" class="intel-toggle btn-secondary">
+              Open Intel
+            </button>
+            <div class="intel-body">
+              <p>
+                Two operators drop into the same sector. There is no extraction
+                until one cannot continue. Ammo is counted. Corners are fatal.
+                Hesitation is a death sentence.
+              </p>
+            </div>
+          </article>
+
+          <article class="intel-card panel">
+            <h3>FILE 02 — City after dark</h3>
+            <button type="button" class="intel-toggle btn-secondary">
+              Open Intel
+            </button>
+            <div class="intel-body">
+              <p>
+                Streetlights fail in strips. Industrial halls echo. Demo maps
+                use the same default facilities you will see at launch — no
+                hidden vendor rooms, no elite spawns.
+              </p>
+            </div>
+          </article>
+
+          <article class="intel-card panel">
+            <h3>FILE 03 — Why the demo is limited</h3>
+            <button type="button" class="intel-toggle btn-secondary">
+              Open Intel
+            </button>
+            <div class="intel-body">
+              <p>
+                Command wants every operator on equal footing. Default guns
+                only. The tournament stays inactive until Dual Fire is ready
+                for commercial release. We will inform everyone then.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="tournament" class="tournament">
+        <div class="prize panel is-inactive">
+          <p class="eyebrow">Inactive · not live</p>
+          <h2>End-of-month tournament</h2>
+          <p class="prize-amount">$1,000</p>
+          <p class="prize-copy">
+            Ranked 1v1 bracket. Same tactical rules. Planned purse is $1,000.
+            The event is not active yet.
+          </p>
+          <p class="prize-notice">
+            We will inform everyone once the game is ready for commercial
+            purposes. No countdown. No registration yet.
+          </p>
+        </div>
+      </section>
+
+      <section id="views" class="views">
+        <div class="section-head">
+          <p class="eyebrow">Operator feedback</p>
+          <h2>Keep coming back.</h2>
+          <p class="section-intro">
+            Play the demo. Come back again. Share what felt sharp and what felt
+            unfinished. Your views are how Dual Fire gets closer to 99% perfect
+            before the commercial release.
+          </p>
+        </div>
+
+        <div class="views-grid">
+          <form id="view-form" class="panel view-form" novalidate>
+            <p class="eyebrow">Drop a view</p>
+            <label for="view-name">Callsign</label>
+            <input
+              id="view-name"
+              name="name"
+              type="text"
+              maxlength="32"
+              autocomplete="nickname"
+              placeholder="Your operator name"
+              required
+            />
+            <label for="view-focus">Focus</label>
+            <select id="view-focus" name="focus">
+              <option value="Gameplay">Gameplay</option>
+              <option value="Visuals">Visuals</option>
+              <option value="Weapons">Weapons</option>
+              <option value="Story">Story</option>
+              <option value="Tournament">Tournament</option>
+              <option value="Other">Other</option>
+            </select>
+            <label for="view-body">What would make this 99%?</label>
+            <textarea
+              id="view-body"
+              name="body"
+              rows="5"
+              maxlength="400"
+              placeholder="Tell us what to keep, cut, or fix…"
+              required
+            ></textarea>
+            <p id="view-status" class="view-status" role="status"></p>
+            <button type="submit" class="btn-primary">Post view</button>
+          </form>
+
+          <div class="view-board">
+            <p class="eyebrow">
+              Field reports · <span id="view-count">0</span> posted
+            </p>
+            <div id="view-list" class="view-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Dual Fire demo — default guns and facilities only.</p>
+      <p>Keep coming back. Play. Share your view.</p>
+    </footer>
+  </body>
+</html>
