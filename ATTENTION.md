@@ -32,7 +32,7 @@ Read: `index.html`, `styles.css`, `script.js`, and the four images. Nothing is s
 
 1. **Play Demo does not start a game.** It only opens an ops-briefing overlay. The red “Demo live” pill is page status, not a playable match. The game still comes later.
 2. **Player comments stay on that person’s computer only.** Views are saved in browser `localStorage` (`dual-fire-views`). You will **not** see comments from other players. They are not sent to GitHub or any server. If you want real feedback for a 99% build, you need a backend or a form service later.
-3. **The $1,000 tournament is advertised but inactive.** The page says the event is not live and there is no registration. Still, a public prize number can look like a promise. Confirm you are comfortable showing **$1,000** before the game and tournament exist.
+3. **The tournament is advertised but inactive, with no dollar amount.** The page says the event is not live and there is no registration. Prize copy is a modest winner’s purse only — confirm you are still comfortable promoting a prize before the game and tournament exist.
 4. **The GitHub repo is public.** Anyone can clone the page. That is fine for a demo. Do not put keys, accounts, or private player data in this repo.
 
 ### Smaller items (not blocking)

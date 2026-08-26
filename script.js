@@ -1,25 +1,35 @@
-const briefing = document.getElementById("demo-briefing");
-const playBtn = document.getElementById("play-demo-btn");
-const closeBtn = document.getElementById("close-briefing-btn");
-const stage = document.getElementById("weapon-stage");
+const playDemoButton = document.getElementById("play-demo-btn");
+const closeBriefingButton = document.getElementById("close-briefing-btn");
+const demoBriefing = document.getElementById("demo-briefing");
+const weaponStage = document.getElementById("weapon-stage");
 const weaponName = document.getElementById("weapon-name");
 const weaponNote = document.getElementById("weapon-note");
 const damageBar = document.getElementById("stat-damage");
 const rangeBar = document.getElementById("stat-range");
 const rateBar = document.getElementById("stat-rate");
+const viewForm = document.getElementById("view-form");
+const viewList = document.getElementById("view-list");
+const viewCount = document.getElementById("view-count");
+const viewStatus = document.getElementById("view-status");
+const VIEW_KEY = "dual-fire-views";
 
+// Shows or hides the ops briefing overlay.
 function toggleDemoBriefing(forceOpen) {
   const shouldOpen =
-    typeof forceOpen === "boolean" ? forceOpen : briefing.hasAttribute("hidden");
+    typeof forceOpen === "boolean"
+      ? forceOpen
+      : demoBriefing.hasAttribute("hidden");
+
+  demoBriefing.classList.toggle("is-open", shouldOpen);
 
   if (shouldOpen) {
-    briefing.removeAttribute("hidden");
-    playBtn.textContent = "Close Briefing";
-    playBtn.setAttribute("aria-expanded", "true");
+    demoBriefing.removeAttribute("hidden");
+    playDemoButton.textContent = "Close Briefing";
+    playDemoButton.setAttribute("aria-expanded", "true");
   } else {
-    briefing.setAttribute("hidden", "");
-    playBtn.textContent = "Play Demo";
-    playBtn.setAttribute("aria-expanded", "false");
+    demoBriefing.setAttribute("hidden", "");
+    playDemoButton.textContent = "Play Demo";
+    playDemoButton.setAttribute("aria-expanded", "false");
   }
 }
 
@@ -30,8 +40,8 @@ function swapDefaultWeapon(thumb) {
     el.classList.toggle("is-active", el === thumb);
   });
 
-  stage.src = thumb.dataset.image;
-  stage.alt = thumb.dataset.alt;
+  weaponStage.src = thumb.dataset.image;
+  weaponStage.alt = thumb.dataset.alt;
   weaponName.textContent = thumb.dataset.name;
   weaponNote.textContent = thumb.dataset.note;
   damageBar.style.width = `${thumb.dataset.damage}%`;
@@ -45,12 +55,6 @@ function toggleIntel(button) {
   card.classList.toggle("is-open", open);
   button.textContent = open ? "Close Intel" : "Open Intel";
 }
-
-const VIEW_KEY = "dual-fire-views";
-const viewForm = document.getElementById("view-form");
-const viewList = document.getElementById("view-list");
-const viewCount = document.getElementById("view-count");
-const viewStatus = document.getElementById("view-status");
 
 function loadViews() {
   try {
@@ -81,7 +85,7 @@ function renderViews() {
 
   views.forEach((view) => {
     const card = document.createElement("article");
-    card.className = "view-card panel";
+    card.className = "view-card panel hud-panel";
 
     const head = document.createElement("header");
     const name = document.createElement("h3");
@@ -93,7 +97,6 @@ function renderViews() {
 
     const body = document.createElement("p");
     body.textContent = view.body;
-
     card.append(head, body);
     viewList.append(card);
   });
@@ -123,21 +126,22 @@ function postView(event) {
   renderViews();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  playBtn.addEventListener("click", () => toggleDemoBriefing());
-  closeBtn.addEventListener("click", () => toggleDemoBriefing(false));
-  briefing.addEventListener("click", (event) => {
-    if (event.target === briefing) toggleDemoBriefing(false);
-  });
-
-  document.querySelectorAll(".weapon-thumb").forEach((thumb) => {
-    thumb.addEventListener("click", () => swapDefaultWeapon(thumb));
-  });
-
-  document.querySelectorAll(".intel-toggle").forEach((button) => {
-    button.addEventListener("click", () => toggleIntel(button));
-  });
-
-  viewForm.addEventListener("submit", postView);
-  renderViews();
+playDemoButton.addEventListener("click", () => toggleDemoBriefing());
+closeBriefingButton.addEventListener("click", () => toggleDemoBriefing(false));
+demoBriefing.addEventListener("click", (event) => {
+  if (event.target === demoBriefing) toggleDemoBriefing(false);
 });
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") toggleDemoBriefing(false);
+});
+
+document.querySelectorAll(".weapon-thumb").forEach((thumb) => {
+  thumb.addEventListener("click", () => swapDefaultWeapon(thumb));
+});
+
+document.querySelectorAll(".intel-toggle").forEach((button) => {
+  button.addEventListener("click", () => toggleIntel(button));
+});
+
+viewForm.addEventListener("submit", postView);
+renderViews();

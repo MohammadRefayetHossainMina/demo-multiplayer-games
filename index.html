@@ -11,14 +11,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
+    <div class="scanlines" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
+
+    <p class="class-bar">
+      <span>DF-01</span>
+      <span>Night ops</span>
+      <span>Equal kit</span>
+      <span>Classified demo</span>
+    </p>
 
     <header class="site-header">
       <a class="logo" href="#hero">DUAL<span>FIRE</span></a>
@@ -45,13 +53,13 @@
         <div class="hud-frame" aria-hidden="true"></div>
 
         <div class="hero-content">
-          <p class="eyebrow">Online two-player shooter · Equal kit</p>
+          <p class="eyebrow">Online two-player shooter · Sector 07</p>
           <h1>Dual Fire</h1>
           <p class="tagline">Kill to survive.</p>
           <p class="hero-copy">
-            Not a 5v5 circus. Not a store-badge landing page. One sector. Two
-            operators. Default guns only. Keep coming back, play the demo, and
-            share your view so we can push Dual Fire toward 99%.
+            A tight 1v1 tactical FPS. One sector. Two operators. Default guns
+            only. Keep coming back, play the demo, and file your view so Dual
+            Fire can close on 99%.
           </p>
           <div class="hero-actions">
             <button type="button" id="play-demo-btn" class="btn-primary">
@@ -61,8 +69,8 @@
           </div>
           <ul class="stat-row">
             <li><strong>1v1</strong><span>Tactical FPS</span></li>
-            <li><strong>3</strong><span>Default guns</span></li>
-            <li><strong>$1K</strong><span>Planned purse</span></li>
+            <li><strong>03</strong><span>Default guns</span></li>
+            <li><strong>Prize</strong><span>Winner's purse</span></li>
           </ul>
         </div>
       </section>
@@ -70,7 +78,7 @@
       <section id="demo" class="sr-only-target" aria-hidden="true"></section>
 
       <div id="demo-briefing" class="demo-briefing" hidden>
-        <div class="briefing-panel panel">
+        <div class="briefing-panel panel hud-panel">
           <p class="eyebrow">Ops briefing // demo access</p>
           <h2>You drop with what command issued.</h2>
           <p>
@@ -91,28 +99,28 @@
 
       <section class="modes">
         <div class="section-head">
-          <p class="eyebrow">Rules of engagement</p>
+          <p class="eyebrow">ROE-01 · Rules of engagement</p>
           <h2>One mode. No clutter.</h2>
         </div>
         <div class="mode-grid">
-          <article class="mode-card is-featured">
-            <p class="mode-kicker">Primary</p>
+          <article class="mode-card is-featured hud-panel">
+            <p class="mode-kicker">01 · Primary</p>
             <h3>Kill to Survive</h3>
             <p>
               Both operators enter the same night sector. Rounds end when one
               cannot continue. Ammo is counted. Corners are fatal.
             </p>
           </article>
-          <article class="mode-card">
-            <p class="mode-kicker">Demo lock</p>
+          <article class="mode-card hud-panel">
+            <p class="mode-kicker">02 · Demo lock</p>
             <h3>Equal loadout</h3>
             <p>
               Skill decides the fight. The demo strips cosmetics and paid power
               so every duel starts honest.
             </p>
           </article>
-          <article class="mode-card">
-            <p class="mode-kicker">Not live</p>
+          <article class="mode-card hud-panel">
+            <p class="mode-kicker">03 · Not live</p>
             <h3>Prize bracket</h3>
             <p>
               Tournament is inactive. We will inform everyone once the game is
@@ -124,7 +132,7 @@
 
       <section id="loadout" class="loadout">
         <div class="section-head">
-          <p class="eyebrow">Issued kit</p>
+          <p class="eyebrow">ARM-02 · Issued kit</p>
           <h2>Default loadout</h2>
           <p class="section-intro">
             Inspect the three guns you actually get. Click a thumbnail — the
@@ -133,7 +141,7 @@
         </div>
 
         <div class="loadout-grid">
-          <figure class="weapon-stage-wrap panel">
+          <figure class="weapon-stage-wrap panel hud-panel">
             <img
               id="weapon-stage"
               src="images/weapon-rifle.png"
@@ -145,7 +153,7 @@
             </figcaption>
           </figure>
 
-          <div class="weapon-telemetry panel">
+          <div class="weapon-telemetry panel hud-panel">
             <p class="eyebrow">Telemetry</p>
             <div class="meter">
               <span>Damage</span>
@@ -216,7 +224,7 @@
 
       <section id="intel" class="intel">
         <div class="section-head">
-          <p class="eyebrow">Classified</p>
+          <p class="eyebrow">INT-03 · Classified</p>
           <h2>Intel files</h2>
           <p class="section-intro">
             Open a file. This world is night ops, tight corridors, and one life
@@ -225,7 +233,7 @@
         </div>
 
         <div class="intel-grid">
-          <article class="intel-card panel">
+          <article class="intel-card panel hud-panel">
             <h3>FILE 01 — The rule</h3>
             <button type="button" class="intel-toggle btn-secondary">
               Open Intel
@@ -239,7 +247,7 @@
             </div>
           </article>
 
-          <article class="intel-card panel">
+          <article class="intel-card panel hud-panel">
             <h3>FILE 02 — City after dark</h3>
             <button type="button" class="intel-toggle btn-secondary">
               Open Intel
@@ -253,7 +261,7 @@
             </div>
           </article>
 
-          <article class="intel-card panel">
+          <article class="intel-card panel hud-panel">
             <h3>FILE 03 — Why the demo is limited</h3>
             <button type="button" class="intel-toggle btn-secondary">
               Open Intel
@@ -270,13 +278,13 @@
       </section>
 
       <section id="tournament" class="tournament">
-        <div class="prize panel is-inactive">
-          <p class="eyebrow">Inactive · not live</p>
+        <div class="prize panel is-inactive hud-panel">
+          <p class="eyebrow">EVT-04 · Inactive · not live</p>
           <h2>End-of-month tournament</h2>
-          <p class="prize-amount">$1,000</p>
+          <p class="prize-amount">Winner takes the purse</p>
           <p class="prize-copy">
-            Ranked 1v1 bracket. Same tactical rules. Planned purse is $1,000.
-            The event is not active yet.
+            Ranked 1v1 bracket. Same tactical rules. A modest cash prize for
+            the winner — details to be announced. The event is not active yet.
           </p>
           <p class="prize-notice">
             We will inform everyone once the game is ready for commercial
@@ -287,7 +295,7 @@
 
       <section id="views" class="views">
         <div class="section-head">
-          <p class="eyebrow">Operator feedback</p>
+          <p class="eyebrow">FBK-05 · Operator feedback</p>
           <h2>Keep coming back.</h2>
           <p class="section-intro">
             Play the demo. Come back again. Share what felt sharp and what felt
@@ -297,7 +305,7 @@
         </div>
 
         <div class="views-grid">
-          <form id="view-form" class="panel view-form" novalidate>
+          <form id="view-form" class="panel view-form hud-panel" novalidate>
             <p class="eyebrow">Drop a view</p>
             <label for="view-name">Callsign</label>
             <input
@@ -343,7 +351,7 @@
 
     <footer class="site-footer">
       <p>Dual Fire demo — default guns and facilities only.</p>
-      <p>Keep coming back. Play. Share your view.</p>
+      <p>DF-01 · Keep coming back. Play. File your view.</p>
     </footer>
   </body>
 </html>
