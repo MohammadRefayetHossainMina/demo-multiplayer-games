@@ -6,7 +6,7 @@
     <title>Dual Fire | Kill to Survive</title>
     <meta
       name="description"
-      content="Dual Fire is a dark tactical 1v1 FPS demo. Default guns only. Learn the world. Tournament details will be announced when the game is ready commercially."
+      content="Dual Fire is a tactical 1v1 FPS preview. Review controls and loadout. Tournament details will be announced when the game is ready commercially."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,24 +22,25 @@
     <div class="grain" aria-hidden="true"></div>
 
     <p class="class-bar">
-      <span>DF-01</span>
-      <span>Night ops</span>
+      <span>Dual Fire</span>
+      <span>Tactical 1v1</span>
       <span>Equal kit</span>
-      <span>Classified demo</span>
+      <span>Official preview</span>
     </p>
 
     <header class="site-header">
       <a class="logo" href="#hero">DUAL<span>FIRE</span></a>
       <nav class="site-nav" aria-label="Primary">
         <ul class="nav-list">
-          <li><a href="#hero">Drop In</a></li>
+          <li><a href="#hero">Overview</a></li>
+          <li><a href="#controls">Controls</a></li>
           <li><a href="#loadout">Loadout</a></li>
           <li><a href="#intel">Intel</a></li>
           <li><a href="#tournament">Tournament</a></li>
-          <li><a href="#views">Views</a></li>
+          <li><a href="#views">Feedback</a></li>
         </ul>
       </nav>
-      <p class="live-pill"><span class="pulse"></span> Demo live</p>
+      <p class="live-pill"><span class="pulse"></span> Preview</p>
     </header>
 
     <main>
@@ -58,8 +59,8 @@
           <p class="tagline">Kill to survive.</p>
           <p class="hero-copy">
             A tight 1v1 tactical FPS. One sector. Two operators. Default guns
-            only. Keep coming back, play the demo, and file your view so Dual
-            Fire can close on 99%.
+            only. Review the controls, inspect the loadout, then file feedback
+            so Dual Fire can close on 99%.
           </p>
           <div class="hero-actions">
             <button type="button" id="play-demo-btn" class="btn-primary">
@@ -91,6 +92,9 @@
             <li>Standard map facilities — no elite rooms</li>
             <li>Two operators. One still standing.</li>
           </ul>
+          <button type="button" class="btn-secondary" id="enter-sector-btn">
+            Enter Freehold Lane
+          </button>
           <button type="button" class="btn-secondary" id="close-briefing-btn">
             Close briefing
           </button>
@@ -127,6 +131,62 @@
               ready for commercial release.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section id="controls" class="controls">
+        <div class="section-head">
+          <p class="eyebrow">Input · Mouse and keyboard</p>
+          <h2>Controls</h2>
+          <p class="section-intro">
+            Standard first-person bindings. These apply when the playable demo
+            launches in the browser (pointer lock). The landing page does not
+            capture the mouse yet.
+          </p>
+        </div>
+
+        <div class="controls-layout">
+          <div class="panel hud-panel control-board">
+            <p class="eyebrow">Movement</p>
+            <div class="key-row">
+              <span class="key-spacer"></span>
+              <kbd>W</kbd>
+              <span class="key-spacer"></span>
+            </div>
+            <div class="key-row">
+              <kbd>A</kbd>
+              <kbd>S</kbd>
+              <kbd>D</kbd>
+            </div>
+            <ul class="control-list">
+              <li><kbd>W A S D</kbd> Move</li>
+              <li><kbd>Space</kbd> Jump</li>
+              <li><kbd>Shift</kbd> Walk</li>
+            </ul>
+          </div>
+
+          <div class="panel hud-panel control-board">
+            <p class="eyebrow">Combat</p>
+            <ul class="control-list">
+              <li><kbd>Mouse</kbd> Look</li>
+              <li><kbd>LMB</kbd> Fire</li>
+              <li><kbd>RMB</kbd> Aim</li>
+              <li><kbd>R</kbd> Reload</li>
+              <li><kbd>1 2 3</kbd> Weapon select</li>
+            </ul>
+          </div>
+
+          <div class="panel hud-panel control-board">
+            <p class="eyebrow">System</p>
+            <ul class="control-list">
+              <li><kbd>Esc</kbd> Release cursor / pause</li>
+              <li><kbd>Play Demo</kbd> Briefing, then enter the lane</li>
+            </ul>
+            <p class="section-intro">
+              Click Play Demo, then Enter Freehold Lane for the night match.
+              Mouse wheel cycles weapons. Esc pauses.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -350,8 +410,8 @@
     </main>
 
     <footer class="site-footer">
-      <p>Dual Fire demo — default guns and facilities only.</p>
-      <p>DF-01 · Keep coming back. Play. File your view.</p>
+      <p>Dual Fire — tactical 1v1 preview. Default guns and facilities only.</p>
+      <p>Freehold Lane demo is playable. Feedback welcome.</p>
     </footer>
   </body>
 </html>

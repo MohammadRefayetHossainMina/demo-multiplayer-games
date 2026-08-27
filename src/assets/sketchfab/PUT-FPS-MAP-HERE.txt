@@ -1,0 +1,7 @@
+Drop the Sketchfab GLB here after you download it while logged in:
+
+https://sketchfab.com/3d-models/fps-map-0088cd0d30184cbc87edf9b7fce88f6c
+
+Save as: fps-map.glb
+
+License is CC Attribution (credit hanitaieberrahmani). This file is for the demo only — replace before commercial launch.

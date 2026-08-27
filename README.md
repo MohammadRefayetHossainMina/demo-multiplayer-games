@@ -1,58 +1,83 @@
 # Dual Fire
 
-A dark tactical **1v1** landing page for **Dual Fire** (working title; **Last Trigger** is a backup name). Tagline: *Kill to survive.*
+Tactical **1v1** browser shooter. Kill to survive.
 
-This repo is a **website demo**, not the game yet. There is no Three.js, Vite, or playable FPS here.
-
-**GitHub:** [MohammadRefayetHossainMina/demo-multiplayer-games](https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games)
+**Repository:** https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games
 
 ---
 
-## What’s on the page
+## Status
 
-- Hero with **Play Demo** (opens an ops briefing — it does **not** start a match)
-- Default loadout inspector (rifle, pistol, CQC)
-- Intel / story files
-- Inactive tournament (modest prize, **no dollar amount**)
-- Operator views form (saved in this browser only)
+| Area | State |
+| --- | --- |
+| Landing page | Preview |
+| Playable FPS demo | Freehold Lane (phases 1–17) |
+| Tournament registration | Inactive (flagged off) |
+| Commercial systems (ads, shop) | Off |
 
 ---
 
 ## Run locally
 
-From this folder:
+Landing page:
 
 ```bash
 python -m http.server 8765 --bind 127.0.0.1
 ```
 
-Then open [http://127.0.0.1:8765/](http://127.0.0.1:8765/).
+Open http://127.0.0.1:8765/ — **Play Demo** → **Enter Freehold Lane**.
 
-Or open `index.html` in a browser. A local server is better so images and scripts load reliably.
+Game (Vite):
 
----
+```bash
+npm install
+npm run dev
+```
 
-## Project files
+Open http://127.0.0.1:5173/
 
-| File | Role |
-|---|---|
-| `index.html` | Page structure |
-| `styles.css` | Visual design (tactical HUD) |
-| `script.js` | Briefing, loadout swap, intel, views |
-| `images/` | Hero and weapon art (AI-generated, demo only) |
-| `ATTENTION.md` | Image / commercial / legal notes |
-| `PRE-GAME-CHECK.md` | Bugs and gaps — **read before building the game** |
+Optional anonymous multiplayer ghosts:
 
----
-
-## Planned game (not started)
-
-Target later: browser tactical shooter with **Vite + Three.js**, Rapier, Pointer Lock, warehouse map, rifle, and orb targets. Development is meant to go **phase by phase**. Phase 1 has not started.
-
-See `PRE-GAME-CHECK.md` before you begin.
+```bash
+npm run net
+```
 
 ---
 
-## License / art
+## Controls
 
-Landing-page code is yours to use in this project. Hero and weapon images were generated in Cursor for the demo. Replace them before a commercial launch. Details: `ATTENTION.md`.
+| Input | Action |
+| --- | --- |
+| `W` `A` `S` `D` | Move |
+| Mouse | Look |
+| Left mouse | Fire |
+| Mouse wheel | Next / previous weapon |
+| `R` | Reload |
+| `1` `2` `3` | ACR / CQC / Pistol |
+| `Space` | Jump |
+| `Shift` | Sprint |
+| `Esc` | Unlock mouse / pause |
+
+Frag **5** targets to win. Soldiers return fire. Demo 3D is Kenney art — replace before commercial launch.
+
+---
+
+## Deploy
+
+```bash
+npm run build
+```
+
+That writes the landing page and the game (`dist/play`) for **Vercel** or **Netlify**. Config: `vercel.json`, `netlify.toml`. Keep `src/config/Commercial.js` flags `false` until launch.
+
+---
+
+## Contents
+
+| Path | Description |
+| --- | --- |
+| `index.html` | Preview landing page |
+| `src/` | Three.js match, HUD, Freehold Lane |
+| `server/ws.mjs` | Anonymous WebSocket pose relay |
+| `ASSETS-DEMO.md` | Demo 3D that must be replaced |
+| `ATTENTION.md` | Image and commercial notes |

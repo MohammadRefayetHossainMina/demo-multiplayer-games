@@ -1,5 +1,6 @@
 const playDemoButton = document.getElementById("play-demo-btn");
 const closeBriefingButton = document.getElementById("close-briefing-btn");
+const enterSectorButton = document.getElementById("enter-sector-btn");
 const demoBriefing = document.getElementById("demo-briefing");
 const weaponStage = document.getElementById("weapon-stage");
 const weaponName = document.getElementById("weapon-name");
@@ -126,8 +127,17 @@ function postView(event) {
   renderViews();
 }
 
+function sectorUrl() {
+  const port = location.port;
+  if (port === "8765" || port === "8080") return "http://127.0.0.1:5173/?match=1";
+  return new URL("play/?match=1", location.origin).href;
+}
+
 playDemoButton.addEventListener("click", () => toggleDemoBriefing());
 closeBriefingButton.addEventListener("click", () => toggleDemoBriefing(false));
+enterSectorButton?.addEventListener("click", () => {
+  location.href = sectorUrl();
+});
 demoBriefing.addEventListener("click", (event) => {
   if (event.target === demoBriefing) toggleDemoBriefing(false);
 });

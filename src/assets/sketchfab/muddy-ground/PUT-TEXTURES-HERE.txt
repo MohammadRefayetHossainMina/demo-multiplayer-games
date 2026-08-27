@@ -1,0 +1,14 @@
+Sketchfab download needs a logged-in account (API returns 401).
+Do not scrape the viewer. Use Sketchfab's Download button.
+
+Model: Seamless Muddy Forest Ground PBR Texture
+https://sketchfab.com/3d-models/seamless-muddy-forest-ground-pbr-texture-bce20d03c0a44d8285fa566c9fb3fbde
+Author: d0ggo
+License: CC Attribution — credit d0ggo if you drop these files in.
+
+When you have the maps, save them here as:
+  albedo.png
+  normal.png
+  roughness.png
+
+Until then Freehold Lane uses a generated muddy road on the streets and parking lots.

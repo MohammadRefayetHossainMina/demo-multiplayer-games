@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dual Fire · Freehold Lane</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="overlay" class="overlay">
+      <div class="overlay-card">
+        <p class="kicker">Dual Fire · night compound</p>
+        <h1 id="overlay-title">Kill to Survive</h1>
+        <p class="lede" id="overlay-body">
+          Frag 5 targets before they drop you. Equal kit. No unlocks.
+        </p>
+        <p class="note" id="xp-line">Lv 1 · 0 XP</p>
+        <button type="button" class="walk" id="match-btn">Start match</button>
+        <button type="button" class="walk ghost" id="walk-btn">Free roam</button>
+        <p class="note" id="status">Loading Three.js…</p>
+        <a class="home-link" id="home-link" href="/">Landing page</a>
+        <div id="commerce" class="commerce" hidden>
+          <p data-ad hidden></p>
+          <button type="button" data-shop hidden>Skin shop</button>
+          <p data-cup hidden>Tournament entry opens after commercial launch.</p>
+        </div>
+      </div>
+    </div>
+    <canvas id="view" tabindex="0"></canvas>
+    <div class="hurt" id="hurt"></div>
+    <div class="crosshair" id="crosshair"></div>
+    <p class="hud" id="hud" hidden>LMB shoot · R reload · 1 ACR · 2 CQC · 3 Pistol · WASD · Esc</p>
+    <div class="hp" id="hp-wrap" hidden>
+      <span id="hp-text">100 HP</span>
+      <div class="hp-bar"><i id="hp-fill"></i></div>
+    </div>
+    <p class="kills" id="kills" hidden>0 / 5</p>
+    <p class="ammo" id="ammo" hidden>30 / 90</p>
+    <div class="minimap" id="minimap-wrap">
+      <canvas id="minimap" width="336" height="336"></canvas>
+      <span class="minimap-n">N</span>
+    </div>
+    <p id="probe" hidden></p>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

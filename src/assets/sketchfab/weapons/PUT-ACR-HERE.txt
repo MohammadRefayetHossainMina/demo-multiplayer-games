@@ -1,0 +1,13 @@
+Drop Adaptive Combat Rifle here (doomsentinel, CC BY).
+
+From the Sketchfab download ZIP, save the GLB as:
+
+  acr.glb
+
+or unpack the glTF as:
+
+  acr/scene.gltf
+  acr/scene.bin
+  acr/textures/...
+
+https://sketchfab.com/3d-models/adaptive-combat-rifle-a18a8008a299430caa5f1fe05563c949

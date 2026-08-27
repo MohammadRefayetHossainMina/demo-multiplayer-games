@@ -1,0 +1,35 @@
+Sketchfab drop-in assets (official Download button only — do not scrape the viewer).
+
+Log in at Sketchfab, download the ZIP, then put files here.
+
+WEAPONS (CC BY — credit the author)
+  Adaptive Combat Rifle by doomsentinel
+  https://sketchfab.com/3d-models/adaptive-combat-rifle-a18a8008a299430caa5f1fe05563c949
+  Save as: weapons/acr.glb
+  or unpack to: weapons/acr/scene.gltf  (+ bin/textures)
+
+  CQC171 by flyinglist1
+  https://sketchfab.com/3d-models/cqc171-15c40d3c13f94e98a0cd51836cf4d7ed
+  Save as: weapons/cqc171.glb
+
+  Pistol by SINNIK
+  https://sketchfab.com/3d-models/pistol-54c52df11e164b42992a7d418d99cd3f
+  Save as: weapons/pistol.glb
+
+ENEMIES
+  Blood Priest (Pigcraft, CC BY) — ~1.9M triangles, too heavy for this demo loop
+  https://sketchfab.com/3d-models/blood-priest-in-crimson-ritual-robes-8055a4c59bf7451c8b95db8baab58909
+  Save as: enemies/blood-priest.glb
+
+  Ash-Grey Cultist (Pigcraft, CC BY) — ~2.0M triangles, too heavy for this demo loop
+  https://sketchfab.com/3d-models/ash-grey-cultist-ritual-mask-chains-ead4dc1528374115a9d392ee7c1ef63d
+  Save as: enemies/cultist.glb
+
+NOT DOWNLOADABLE on Sketchfab (no public download / no CC license on the API):
+  Federation Soldier Pose A by grico316
+  https://sketchfab.com/3d-models/federation-soldier-pose-a-021e06d1875e4009af62eab596ec7dad
+
+  Enemy Walk by Quenth
+  https://sketchfab.com/3d-models/enemy-walk-1f86a94a840d4b57a921134214614349
+
+Demo only. Replace all third-party 3D before commercial launch.

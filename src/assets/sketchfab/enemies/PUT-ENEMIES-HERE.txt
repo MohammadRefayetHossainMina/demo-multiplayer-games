@@ -1,0 +1,11 @@
+Enemy drop-ins. Official Sketchfab Download only.
+
+  enemies/blood-priest.glb
+  Blood Priest in Crimson Ritual Robes by Pigcraft (CC BY)
+  ~1.9M triangles — do not drop this into the live patrol loop as-is
+
+  enemies/cultist.glb
+  Ash-Grey Cultist by Pigcraft (CC BY)
+  ~2.0M triangles — too heavy for 60 FPS on this map
+
+Federation Soldier Pose A and Enemy Walk are not publicly downloadable on Sketchfab.
