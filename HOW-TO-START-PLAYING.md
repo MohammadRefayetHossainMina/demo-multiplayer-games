@@ -1,6 +1,6 @@
 # How to start playing
 
-Dual Fire is a **local browser demo**. There is no public Vercel or Netlify URL yet. You run two small servers on your computer, then play in Chrome or Edge.
+Dual Fire is a **local browser demo**: **one player versus AI soldiers and a boss**. There is no second human in this build, and no public Vercel or Netlify URL yet. You run two small servers on your computer, then play in Chrome or Edge.
 
 You need **Node.js** (for the game) and **Python 3** (for the landing page).
 
@@ -54,7 +54,7 @@ Leave this running. The site is at [http://127.0.0.1:8765/](http://127.0.0.1:876
 
 You can skip the landing page and open [http://127.0.0.1:5173/](http://127.0.0.1:5173/) directly.
 
-**Free roam** walks the map with no win/loss. **Start match** is the real fight: 100 HP, frag 5 targets to win. Soldiers shoot back.
+**Free roam** walks the map with no win/loss. **Start match** is you versus AI and a boss: 100 HP, frag 5 to win.
 
 ---
 
@@ -71,18 +71,6 @@ You can skip the landing page and open [http://127.0.0.1:5173/](http://127.0.0.1
 | `Space` | Jump |
 | `Shift` | Sprint |
 | `Esc` | Unlock mouse / pause |
-
----
-
-## Optional: anonymous multiplayer ghosts
-
-A second player on the same PC can appear as a capsule if you also run:
-
-```bash
-npm run net
-```
-
-That only relays positions. It is not ranked 1v1.
 
 ---
 

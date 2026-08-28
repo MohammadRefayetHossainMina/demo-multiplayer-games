@@ -30,7 +30,9 @@ export function createHud(els) {
           ? "The lane took you. Drop again."
           : paused
             ? "Pointer unlocked. Resume to keep the fight."
-            : "Frag " + WIN_KILLS + " targets before they drop you. Equal kit. No unlocks.";
+            : "You vs AI and a boss. Frag " +
+              WIN_KILLS +
+              " before they drop you. No second player.";
     }
     if (els.xp) els.xp.textContent = extra || xpLine();
     if (els.matchBtn) {
@@ -70,6 +72,12 @@ export function createHud(els) {
       els.crosshair.classList.toggle("hurt", live && state.hurtFlash);
     }
     if (els.hurt) els.hurt.classList.toggle("on", live && state.hurtFlash);
+    if (els.shotDir) {
+      const incoming = live && state.incoming > 0;
+      els.shotDir.hidden = !incoming;
+      els.shotDir.classList.toggle("on", incoming);
+      if (incoming) els.shotDir.style.transform = "rotate(" + state.incomingAngle + "rad)";
+    }
   }
 
   return { showOverlay, hideOverlay, paint, xpLine };

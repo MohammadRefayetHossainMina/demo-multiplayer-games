@@ -1,10 +1,10 @@
 # Dual Fire
 
-Tactical **1v1** browser shooter. Kill to survive.
+Tactical **solo vs AI** browser demo. Kill to survive.
 
 **Repository:** https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games
 
-**Play:** see [How to start playing](HOW-TO-START-PLAYING.md). There is no public Vercel/Netlify URL yet.
+**Play:** see [How to start playing](HOW-TO-START-PLAYING.md). There is no public Vercel/Netlify URL yet. This demo is **one player versus AI soldiers and a boss** — not a second human.
 
 ---
 
@@ -13,7 +13,7 @@ Tactical **1v1** browser shooter. Kill to survive.
 | Area | State |
 | --- | --- |
 | Landing page | Preview |
-| Playable FPS demo | Freehold Lane (phases 1–17) |
+| Playable FPS demo | Freehold Lane — solo vs AI + boss |
 | Tournament registration | Inactive (flagged off) |
 | Commercial systems (ads, shop) | Off |
 
@@ -38,11 +38,7 @@ npm run dev
 
 Open http://127.0.0.1:5173/
 
-Optional anonymous multiplayer ghosts:
-
-```bash
-npm run net
-```
+The demo does not need a second player. `npm run net` is unused leftover for later.
 
 ---
 
@@ -60,7 +56,7 @@ npm run net
 | `Shift` | Sprint |
 | `Esc` | Unlock mouse / pause |
 
-Frag **5** targets to win. Soldiers return fire. Demo 3D is Kenney art — replace before commercial launch.
+Frag **5** AI (or the boss) to win. Demo 3D is Kenney art — replace before commercial launch.
 
 ---
 
@@ -81,6 +77,6 @@ That writes the landing page and the game (`dist/play`) for **Vercel** or **Netl
 | `HOW-TO-START-PLAYING.md` | How to run the landing page and match |
 | `index.html` | Preview landing page |
 | `src/` | Three.js match, HUD, Freehold Lane |
-| `server/ws.mjs` | Anonymous WebSocket pose relay |
+| `server/ws.mjs` | Unused leftover pose relay (demo is solo) |
 | `ASSETS-DEMO.md` | Demo 3D that must be replaced |
 | `ATTENTION.md` | Image and commercial notes |

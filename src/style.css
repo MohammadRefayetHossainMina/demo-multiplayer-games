@@ -111,19 +111,29 @@ h1 {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 12px;
-  height: 12px;
-  margin: -6px 0 0 -6px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border: 0;
   border-radius: 50%;
+  background: #f4f1ea;
+  box-shadow: 0 0 0 1px rgba(8, 10, 12, 0.75);
   pointer-events: none;
   opacity: 0;
   z-index: 3;
 }
 
+.crosshair.on {
+  opacity: 1;
+}
+
 .crosshair.hit {
-  border-color: #ffd27a;
-  box-shadow: 0 0 10px rgba(255, 178, 71, 0.85);
+  background: #ffd27a;
+  box-shadow: 0 0 0 1px rgba(8, 10, 12, 0.75), 0 0 8px rgba(255, 178, 71, 0.85);
+}
+
+.crosshair.hurt {
+  background: #d45b5b;
 }
 
 .kills {
@@ -264,6 +274,31 @@ h1 {
   opacity: 1;
 }
 
+.shot-dir {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.shot-dir.on {
+  opacity: 1;
+}
+
+.shot-dir i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin: -118px 0 0 -11px;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 20px solid #ff5340;
+  filter: drop-shadow(0 0 8px #ff3a28);
+}
+
 .hp {
   position: fixed;
   z-index: 3;
@@ -292,8 +327,4 @@ h1 {
   height: 100%;
   width: 100%;
   background: #c4a35a;
-}
-
-.crosshair.hurt {
-  border-color: #d45b5b;
 }

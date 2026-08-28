@@ -69,10 +69,22 @@ export function createMinimap(canvas) {
 
     for (const blip of state.ai || []) {
       const p = project(blip.x, blip.z, bounds, w, h);
+      const radius = blip.role === "boss" ? 7.2 : blip.role === "tactical" ? 5.2 : 4.2;
       ctx.beginPath();
-      ctx.fillStyle = "#5f6368";
-      ctx.arc(p.x, p.y, 4.2, 0, Math.PI * 2);
-      ctx.fill();
+      if (blip.firing) {
+        ctx.fillStyle = "rgba(255, 90, 50, 0.35)";
+        ctx.arc(p.x, p.y, radius + 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "#ff5a32";
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillStyle =
+          blip.role === "boss" ? "#c4a35a" : blip.role === "tactical" ? "#8a6a4a" : "#5f6368";
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
     for (const blip of state.orbs || []) {

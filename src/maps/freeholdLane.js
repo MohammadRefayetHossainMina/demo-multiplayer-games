@@ -27,7 +27,7 @@ const SCALE = 8;
 export const freeholdLane = {
   id: "lane",
   name: "Freehold Lane",
-  use: "Large 1v1 compound with houses and malls. Demo Kenney art — replace before commercial launch.",
+  use: "Solo vs AI compound with houses and malls. Demo Kenney art — replace before commercial launch.",
   async build(THREE, world) {
     const blockers = [];
 
@@ -473,25 +473,37 @@ export const freeholdLane = {
       THREE,
       world,
       [
-        [
-          { x: 0, z: 32 },
-          { x: 0, z: 10 },
-          { x: 0, z: 32 },
-        ],
-        [
-          { x: 0, z: -48 },
-          { x: 0, z: 0 },
-          { x: -48, z: 0 },
-          { x: 0, z: 0 },
-        ],
-        [
-          { x: 22, z: 0 },
-          { x: 22, z: 20 },
-          { x: 0, z: 20 },
-          { x: 0, z: 0 },
-        ],
+        { role: "grunt", route: [{ x: 0, z: 32 }, { x: 0, z: 12 }] },
+        { role: "grunt", route: [{ x: 0, z: -48 }, { x: 0, z: -14 }] },
+        { role: "grunt", route: [{ x: 48, z: 0 }, { x: 14, z: 0 }] },
+        { role: "grunt", route: [{ x: -48, z: 0 }, { x: -14, z: 0 }] },
+        {
+          role: "tactical",
+          personality: "aggressive",
+          route: [{ x: 22, z: 20 }, { x: 22, z: 4 }, { x: 8, z: 20 }],
+        },
+        {
+          role: "tactical",
+          personality: "defensive",
+          route: [{ x: -22, z: -22 }, { x: -22, z: -4 }, { x: -8, z: -22 }],
+        },
+        {
+          role: "tactical",
+          personality: "balanced",
+          route: [{ x: 20, z: -20 }, { x: 6, z: -20 }, { x: 20, z: -6 }],
+        },
+        {
+          role: "boss",
+          route: [
+            { x: 0, z: -36 },
+            { x: 36, z: 0 },
+            { x: 0, z: 28 },
+            { x: -36, z: 0 },
+          ],
+        },
       ],
-      blocked
+      blocked,
+      footprints
     );
 
     const targets = createOrbs(world, [

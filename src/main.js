@@ -1,14 +1,14 @@
-import { CapsuleGeometry, Mesh, MeshStandardMaterial } from "three";
+import { Vector3 } from "three";
 import { createEngine } from "./core/engine.js";
 import { createInput } from "./core/Input.js";
 import { createMinimap } from "./core/minimap.js";
 import { createGameAudio } from "./core/audio.js";
 import { probeContainment, probeReach } from "./core/containment.js";
 import { createMatch } from "./core/match.js";
-import { createNet } from "./core/net.js";
 import { recordMatch, snapshotProgress } from "./core/progress.js";
 import { createViewWeapon } from "./entities/Weapon.js";
 import { applyDamage, healthFromHit } from "./entities/Targets.js";
+import { createCombatFx } from "./entities/fx.js";
 import { mountCommerce } from "./ui/commerce.js";
 import { createHud } from "./ui/hud.js";
 import { freeholdLane } from "./maps/freeholdLane.js";
@@ -40,12 +40,15 @@ const engine = createEngine(canvas);
 const input = createInput(canvas);
 const audio = createGameAudio();
 const match = createMatch();
-const net = createNet();
-const ghosts = new Map();
+const incomingFx = createCombatFx(engine.getScene());
+const SHOT_FROM = new Vector3();
+const SHOT_TO = new Vector3();
 let hitFlash = 0;
 let hurtFlash = 0;
+let incomingLife = 0;
+let incomingX = 0;
+let incomingZ = 0;
 let lastShot = null;
-let lastNet = 0;
 
 const weapon = createViewWeapon(engine.camera, {
   world: engine.getWorld(),
@@ -66,6 +69,7 @@ const weapon = createViewWeapon(engine.camera, {
       return;
     }
     const result = applyDamage(health, shot.damage);
+    if (result.hit && health.kind === "soldier") engine.getPatrol()?.markFire?.(health);
     if (!result.hit) {
       audio.impact(shot.point);
       return;
@@ -97,28 +101,18 @@ const hud = createHud({
   hud: document.getElementById("hud"),
   crosshair: document.getElementById("crosshair"),
   hurt: document.getElementById("hurt"),
+  shotDir: document.getElementById("shot-dir"),
 });
 const minimap = createMinimap(document.getElementById("minimap"));
 mountCommerce(document.getElementById("commerce"));
 
-const ghostMat = new MeshStandardMaterial({ color: 0x4a6d8c, roughness: 0.7 });
-net.onPeer((id, pose) => {
-  let mesh = ghosts.get(id);
-  if (!mesh) {
-    mesh = new Mesh(new CapsuleGeometry(0.32, 1.05, 3, 8), ghostMat);
-    mesh.castShadow = true;
-    engine.getScene().add(mesh);
-    ghosts.set(id, mesh);
-  }
-  mesh.position.set(pose.x, 0.9, pose.z);
-  mesh.rotation.y = pose.yaw;
-});
-net.onLeave((id) => {
-  const mesh = ghosts.get(id);
-  if (!mesh) return;
-  engine.getScene().remove(mesh);
-  ghosts.delete(id);
-});
+function shotAngle(player, yaw, x, z) {
+  const toX = x - player.x;
+  const toZ = z - player.z;
+  const fx = -Math.sin(yaw);
+  const fz = -Math.cos(yaw);
+  return Math.atan2(fx * toZ - fz * toX, fx * toX + fz * toZ);
+}
 
 function resetWorldCombat() {
   engine.getPatrol()?.reset?.();
@@ -157,7 +151,6 @@ async function beginPlay(kind) {
   document.body.dataset.match = match.roam ? "roam" : "playing";
   await audio.unlock();
   audio.startAmbience();
-  net.connect();
   input.requestLock();
 }
 
@@ -260,21 +253,33 @@ engine.onFrame((dt, ctx) => {
     audio.setListener(ctx.camera);
   }
 
-  if (live && !match.roam) {
-    engine.getPatrol()?.tryAttack?.(dt, ctx.camera.position, {
-      active: true,
-      onShot(shot) {
-        audio.shot({ x: shot.x, y: shot.y, z: shot.z });
-        if (!shot.hit) return;
-        hurtFlash = 0.18;
-        const next = match.hurt(shot.damage);
-        if (next === "lose") endMatch(false);
-      },
-    });
-  }
+  engine.getPatrol()?.setCombat?.({
+    player: ctx.camera.position,
+    active: live && !match.roam,
+    onShot(shot) {
+      audio.shot({ x: shot.x, y: shot.y, z: shot.z });
+      incomingLife = 0.95;
+      incomingX = shot.x;
+      incomingZ = shot.z;
+      SHOT_FROM.set(shot.x, shot.y, shot.z);
+      SHOT_TO.copy(ctx.camera.position);
+      if (!shot.hit) {
+        SHOT_TO.x += (Math.random() - 0.5) * 0.7;
+        SHOT_TO.y -= 0.15;
+      }
+      incomingFx.spawnMuzzle(SHOT_FROM);
+      incomingFx.spawnTracer(SHOT_FROM, SHOT_TO, 0.16);
+      if (!shot.hit) return;
+      hurtFlash = 0.18;
+      const next = match.hurt(shot.damage);
+      if (next === "lose") endMatch(false);
+    },
+  });
 
+  incomingFx.step(dt);
   hitFlash = Math.max(0, hitFlash - dt);
   hurtFlash = Math.max(0, hurtFlash - dt);
+  incomingLife = Math.max(0, incomingLife - dt);
   const clip = weapon.getAmmo();
   hud.paint({
     playing: ctx.playing,
@@ -287,6 +292,8 @@ engine.onFrame((dt, ctx) => {
     weapon: weapon.getName(),
     hitFlash: hitFlash > 0,
     hurtFlash: hurtFlash > 0,
+    incoming: incomingLife,
+    incomingAngle: shotAngle(ctx.camera.position, input.getYaw(), incomingX, incomingZ),
   });
   if (ctx.playing) {
     document.body.dataset.ammo = clip.mag + "/" + clip.reserve;
@@ -310,11 +317,6 @@ engine.onFrame((dt, ctx) => {
     orbs: engine.getOrbBlips(),
   });
 
-  lastNet += dt;
-  if (lastNet > 0.05 && ctx.playing && (live || match.roam)) {
-    lastNet = 0;
-    net.sendPose(ctx.camera.position.x, ctx.camera.position.z, input.getYaw());
-  }
 });
 engine.onMode(setPlayingUi);
 
@@ -372,7 +374,6 @@ window.__debugTargets = () => ({
   orbs: engine.getTargetList(),
   soldiers: engine.getPatrolList(),
   progress: snapshotProgress(),
-  net: net.connected(),
 });
 window.__debugMatch = {
   start: () => beginPlay("match"),
