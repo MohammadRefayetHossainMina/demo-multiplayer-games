@@ -130,7 +130,7 @@ function postView(event) {
 function sectorUrl() {
   const port = location.port;
   if (port === "8765" || port === "8080") return "http://127.0.0.1:5173/?match=1";
-  return new URL("play/?match=1", location.origin).href;
+  return new URL("play/?match=1", location.href).href;
 }
 
 playDemoButton.addEventListener("click", () => toggleDemoBriefing());

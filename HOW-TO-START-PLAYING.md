@@ -1,8 +1,12 @@
 # How to start playing
 
-Dual Fire is a **local browser demo**: **one player versus AI soldiers and a boss**. There is no second human in this build, and no public Vercel or Netlify URL yet. You run two small servers on your computer, then play in Chrome or Edge.
+Dual Fire is a **solo browser demo**: **one player versus AI soldiers and a boss**. There is no second human in this build.
 
-You need **Node.js** (for the game) and **Python 3** (for the landing page).
+**Play:** https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/
+
+Click **Play Demo**, then **Enter Freehold Lane**, then **Start match**. Click the game once so the mouse locks.
+
+To run on your computer instead, you need **Node.js** (for the game) and **Python 3** (for the landing page).
 
 ---
 
@@ -74,10 +78,8 @@ You can skip the landing page and open [http://127.0.0.1:5173/](http://127.0.0.1
 
 ---
 
-## Why there is no public play link yet
+## Public site
 
-`npm run build` packages the site into a `dist/` folder that Vercel or Netlify can host. That build works. **Deploying** means uploading it to one of those hosts so anyone gets a `*.vercel.app` or Netlify URL.
-
-That upload has not been done. Until it is, only `127.0.0.1` on this machine can play.
+GitHub Pages hosts the built site at https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/
 
 Ads, shop, and tournaments stay off. Demo 3D is Kenney art and must be replaced before a commercial launch.

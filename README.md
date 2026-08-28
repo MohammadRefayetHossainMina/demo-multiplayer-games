@@ -4,7 +4,9 @@ Tactical **solo vs AI** browser demo. Kill to survive.
 
 **Repository:** https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games
 
-**Play:** see [How to start playing](HOW-TO-START-PLAYING.md). There is no public Vercel/Netlify URL yet. This demo is **one player versus AI soldiers and a boss** — not a second human.
+**Play:** https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/
+
+This demo is **one player versus AI soldiers and a boss** — not a second human. Local setup: [How to start playing](HOW-TO-START-PLAYING.md).
 
 ---
 
@@ -12,7 +14,7 @@ Tactical **solo vs AI** browser demo. Kill to survive.
 
 | Area | State |
 | --- | --- |
-| Landing page | Preview |
+| Landing page | Preview (GitHub Pages) |
 | Playable FPS demo | Freehold Lane — solo vs AI + boss |
 | Tournament registration | Inactive (flagged off) |
 | Commercial systems (ads, shop) | Off |
@@ -62,11 +64,13 @@ Frag **5** AI (or the boss) to win. Demo 3D is Kenney art — replace before com
 
 ## Deploy
 
+GitHub Pages publishes from `.github/workflows/pages.yml` on every push to `main`.
+
 ```bash
 npm run build
 ```
 
-That writes the landing page and the game (`dist/play`) for **Vercel** or **Netlify**. Config: `vercel.json`, `netlify.toml`. Keep `src/config/Commercial.js` flags `false` until launch.
+That writes the landing page and the game into `dist/` (`dist/play` is the match). Keep `src/config/Commercial.js` flags `false` until launch.
 
 ---
 

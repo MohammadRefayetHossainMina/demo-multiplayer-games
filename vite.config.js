@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   root: "src",
   publicDir: false,
+  base: command === "build" ? "./" : "/",
   server: {
     port: 5173,
     strictPort: true,
@@ -21,4 +22,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

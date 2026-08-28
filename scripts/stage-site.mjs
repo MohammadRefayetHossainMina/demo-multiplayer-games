@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, existsSync } from "node:fs";
+import { cpSync, mkdirSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,4 +12,5 @@ for (const file of ["index.html", "styles.css", "script.js"]) {
 if (existsSync(join(root, "images"))) {
   cpSync(join(root, "images"), join(dist, "images"), { recursive: true });
 }
+writeFileSync(join(dist, ".nojekyll"), "");
 console.log("Staged landing page into dist/");
