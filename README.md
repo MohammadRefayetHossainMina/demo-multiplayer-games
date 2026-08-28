@@ -58,7 +58,7 @@ The demo does not need a second player. `npm run net` is unused leftover for lat
 | `Shift` | Sprint |
 | `Esc` | Unlock mouse / pause |
 
-Frag **5** AI (or the boss) to win. Demo 3D is Kenney art — replace before commercial launch.
+Kill the **boss** to win. Grunts and tacticals respawn; the boss does not. Demo 3D is Kenney art — replace before commercial launch.
 
 ---
 

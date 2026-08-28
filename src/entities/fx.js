@@ -30,8 +30,8 @@ export function createCombatFx(scene) {
     blending: AdditiveBlending,
     depthWrite: false,
   });
-  const sparkGeo = new SphereGeometry(0.06, 6, 6);
-  const muzzleGeo = new SphereGeometry(0.14, 8, 8);
+  const sparkGeo = new SphereGeometry(0.03, 6, 6);
+  const muzzleGeo = new SphereGeometry(0.028, 8, 8);
   const muzzleLight = new PointLight(0xffc078, 0, 22, 2);
   scene.add(muzzleLight);
 
@@ -57,7 +57,7 @@ export function createCombatFx(scene) {
     FROM.set(from.x, from.y, from.z);
     const flash = new Mesh(muzzleGeo, sparkMat.clone());
     flash.position.copy(FROM);
-    flash.scale.setScalar(2.8);
+    flash.scale.setScalar(1);
     flash.frustumCulled = false;
     flash.userData.life = 0.11;
     scene.add(flash);
@@ -93,7 +93,7 @@ export function createCombatFx(scene) {
       spark.userData.life -= dt;
       const t = Math.max(0, spark.userData.life / 0.12);
       spark.material.opacity = t;
-      spark.scale.setScalar(0.4 + (1 - t) * 2.2);
+      spark.scale.setScalar(0.35 + (1 - t) * 1.4);
       if (spark.userData.life <= 0) {
         scene.remove(spark);
         spark.material.dispose();
@@ -105,7 +105,7 @@ export function createCombatFx(scene) {
       flash.userData.life -= dt;
       const t = Math.max(0, flash.userData.life / 0.11);
       flash.material.opacity = t;
-      flash.scale.setScalar(2.2 + (1 - t) * 2.4);
+      flash.scale.setScalar(0.7 + (1 - t) * 0.8);
       if (flash.userData.life <= 0) {
         scene.remove(flash);
         flash.material.dispose();

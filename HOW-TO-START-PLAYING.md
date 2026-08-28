@@ -58,7 +58,7 @@ Leave this running. The site is at [http://127.0.0.1:8765/](http://127.0.0.1:876
 
 You can skip the landing page and open [http://127.0.0.1:5173/](http://127.0.0.1:5173/) directly.
 
-**Free roam** walks the map with no win/loss. **Start match** is you versus AI and a boss: 100 HP, frag 5 to win.
+**Free roam** walks the map with no win/loss. **Start match** is you versus AI and a boss: 100 HP. Kill the **boss** to win. Grunts and tacticals respawn.
 
 ---
 

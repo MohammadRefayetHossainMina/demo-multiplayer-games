@@ -1,46 +1,55 @@
-# PROJECT SPECIFICATION: Dual Fire / Last Trigger
+# PROJECT SPECIFICATION: Dual Fire
 
-**Game title:** Dual Fire / Last Trigger  
-**Genre:** Fast-paced browser tactical shooter  
+**Game title:** Dual Fire  
+**Genre:** Dark tactical browser FPS demo (solo vs AI)  
 **Target engine:** Three.js (WebGL) via Vite  
-**Physics:** Rapier.js (WASM) / lightweight raycasting  
-**Language:** JavaScript / TypeScript  
-**Monetization target:** A$10,000 / month (ads, cosmetics, tournaments)
+**Physics:** Lightweight raycasting  
+**Language:** JavaScript  
+**Monetization target:** Later commercial launch (ads, cosmetics, tournaments). Flags stay off in this demo.
 
-The live preview site currently does **not** show a prize dollar amount. Tournament copy on the page stays inactive until commercial launch.
+The live site does **not** show a prize dollar amount. Tournament copy stays inactive until commercial launch.
 
 ---
 
 ## 1. Project brief and vision
 
-**Website topic:** Dual Fire / Last Trigger — a high-octane tactical browser shooter.
+**Website topic:** Dual Fire — a dark tactical browser FPS. Tagline: Kill to survive.
 
-**Core purpose:** Launch a high-converting web portal that lets players instantly test the demo, immerse in the game lore, and register for competitive events.
+**Core purpose:** Let a visitor play the demo immediately, learn the sector story, inspect the default loadout, and leave feedback before a later commercial launch.
 
-**Target audience:** Gamers who enjoy fast tactical shooters (CS:GO, Krunker, Cryzen) and competitive ladder play.
+**Target audience:** Players who like fast tactical shooters (CS:GO, Krunker, Cryzen) and want a short solo fight in the browser.
 
-**Primary visitor outcome:** Play the game demo, learn the “Kill to Survive” story, and register for the monthly tournament.
+**Primary visitor outcome:** Play Freehold Lane (one player versus AI soldiers and a boss), read the Kill to Survive briefing, and post a view.
 
-**Key call to action:** The **Play Demo** button (immediate entry into gameplay).
+**Key call to action:** The **Play Demo** button. It opens the ops briefing, then **Enter Freehold Lane** starts the match.
+
+This demo is **solo vs AI**. There is no second human player.
 
 ---
 
-## 2. Core web portal architecture (3 main sections)
+## 2. Core web portal architecture
 
 ### Play Demo (hero)
 
-- Prominent interactive WebGL canvas area with zero-friction guest access.
-- Prominent **Play Demo** button launching fullscreen Pointer Lock mode.
+- Dark night-ops hero with **Play Demo** as the main button.
+- Play Demo opens a briefing (default guns, hunt the boss, no second player).
+- **Enter Freehold Lane** loads the playable match. Click the game to lock the mouse.
 
-### Kill to Survive (story and world lore)
+### Kill to Survive (story and loadout)
 
-- Narrative blurb introducing the dystopian, high-stakes tactical lore of Dual Fire / Last Trigger.
-- Showcase area highlighting target types (Flaming, Cyber, and Water Orbs) and weapon loadouts (assault rifle).
+- You drop in alone. Win by killing the **boss**. Grunts and tacticals respawn; the boss does not.
+- Default kit only: rifle, CQC, pistol. No unlocks and no paid skins in this demo.
+- Intel cards cover the lane, equal loadout, and why the tournament is still inactive.
 
-### Monthly tournament (competitive hub)
+### Monthly tournament (inactive hub)
 
-- Live countdown timer, entry rules, and cash prize pool breakdown (e.g. A$500 pool).
-- Registration form marked with “Coming After Full Launch” state.
+- The section exists so visitors know a later competitive event is planned.
+- It stays inactive. No countdown and no prize dollar amount.
+- Ranked 1v1 is later, not this demo.
+
+### Feedback
+
+- Views section: operators keep playing and say what would make Dual Fire closer to 99%.
 
 ---
 
@@ -123,4 +132,4 @@ export const COMMERCIAL_CONFIG = {
 
 ## Status
 
-Phases **1–17** are implemented on **Freehold Lane** (Kenney demo art). Commercial flags in `src/config/Commercial.js` stay `false`. Replace demo 3D before a paid launch (`ASSETS-DEMO.md`).
+The playable demo is **Freehold Lane**: one player versus AI grunts, tacticals, and one boss. Kill the boss to win. Dummy orbs may still exist as leftover targets; soldiers and the boss are the live fight. Commercial flags in `src/config/Commercial.js` stay `false`. Kenney demo 3D must be replaced before a paid launch (`ASSETS-DEMO.md`).

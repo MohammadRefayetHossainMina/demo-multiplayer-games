@@ -69,7 +69,7 @@ const weapon = createViewWeapon(engine.camera, {
       return;
     }
     const result = applyDamage(health, shot.damage);
-    if (result.hit && health.kind === "soldier") engine.getPatrol()?.markFire?.(health);
+    if (result.hit && (health.kind === "soldier" || health.kind === "boss")) engine.getPatrol()?.markFire?.(health);
     if (!result.hit) {
       audio.impact(shot.point);
       return;
@@ -77,7 +77,7 @@ const weapon = createViewWeapon(engine.camera, {
     audio.hit(shot.point, result);
     hitFlash = 0.09;
     if (result.killed) {
-      const next = match.addKill();
+      const next = match.addKill(health.role === "boss" ? "boss" : health.kind);
       if (next === "win") endMatch(true);
     }
   },
@@ -267,7 +267,6 @@ engine.onFrame((dt, ctx) => {
         SHOT_TO.x += (Math.random() - 0.5) * 0.7;
         SHOT_TO.y -= 0.15;
       }
-      incomingFx.spawnMuzzle(SHOT_FROM);
       incomingFx.spawnTracer(SHOT_FROM, SHOT_TO, 0.16);
       if (!shot.hit) return;
       hurtFlash = 0.18;
@@ -365,6 +364,19 @@ window.__debugCombat = {
   ammo: () => weapon.getAmmo(),
 };
 window.__debugAi = () => engine.getAiBlips();
+window.__debugGuns = () => engine.getPatrol()?.guns?.() || [];
+window.__debugView = {
+  get: () => ({
+    x: +engine.camera.position.x.toFixed(2),
+    y: +engine.camera.position.y.toFixed(2),
+    z: +engine.camera.position.z.toFixed(2),
+  }),
+  look(x, y, z, tx, ty, tz) {
+    engine.camera.position.set(x, y, z);
+    input.faceToward(engine.camera.position, { x: tx, y: ty, z: tz });
+    input.applyLook(engine.camera);
+  },
+};
 window.__debugTargets = () => ({
   kills: match.kills,
   hp: match.hp,

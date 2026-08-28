@@ -54,7 +54,7 @@ const BASE = {
   boss: {
     level: 3,
     hp: 168,
-    respawn: 8.5,
+    respawn: 0,
     detectRange: 36,
     viewHalf: (52 * Math.PI) / 180,
     weaponMin: 2.2,

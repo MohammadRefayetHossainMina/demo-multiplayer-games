@@ -1,5 +1,4 @@
 export const PLAYER_MAX_HP = 100;
-export const WIN_KILLS = 5;
 
 export function createMatch() {
   let state = "menu";
@@ -38,10 +37,10 @@ export function createMatch() {
     resume() {
       if (state === "paused") state = "playing";
     },
-    addKill() {
+    addKill(target) {
       if (!live() || roam) return state;
       kills += 1;
-      if (kills >= WIN_KILLS) state = "win";
+      if (target === "boss") state = "win";
       return state;
     },
     hurt(amount) {

@@ -1,15 +1,19 @@
-import { AnimationMixer, Box3, CapsuleGeometry, Color, LoadingManager, LoopOnce, Mesh, MeshBasicMaterial, SRGBColorSpace, TextureLoader, Vector3 } from "three";
+import { AnimationMixer, Box3, CapsuleGeometry, Color, LoadingManager, LoopOnce, Mesh, MeshBasicMaterial, Quaternion, SRGBColorSpace, TextureLoader, Vector3 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { clone as cloneSkeleton } from "three/addons/utils/SkeletonUtils.js";
 import soldierUrl from "../assets/kenney/soldiers/character-soldier.glb?url";
 import soldierAtlasUrl from "../assets/kenney/soldiers/colormap.png?url";
 import { makeHealth, raySphere, tickHealth } from "../entities/Targets.js";
+import { attachHeldRifle } from "../entities/heldRifle.js";
 import { resetBrain, updateBrain } from "./ai/brain.js";
 import { roleConfig } from "./ai/config.js";
 import { buildCoverSlots } from "./ai/cover.js";
 
 const TARGET_HEIGHT = 1.72;
 const SIZE = new Vector3();
+const MUZ = new Vector3();
+const HOLD_RIGHT = new Quaternion(0, -0.5, 0, -0.866).normalize();
+const HOLD_LEFT = new Quaternion(0, 0, 0.3827, -0.9239).normalize();
 const manager = new LoadingManager();
 manager.setURLModifier((url) => (url.includes("colormap.png") ? soldierAtlasUrl : url));
 const loader = new GLTFLoader(manager);
@@ -56,6 +60,8 @@ function paint(root, map, tint) {
 }
 
 function fitSoldier(root, scale = 1) {
+  const head = root.getObjectByName("head");
+  if (head) head.scale.setScalar(0.22);
   root.updateMatrixWorld(true);
   const box = new Box3().setFromObject(root);
   box.getSize(SIZE);
@@ -65,6 +71,21 @@ function fitSoldier(root, scale = 1) {
   const grounded = new Box3().setFromObject(root);
   root.position.y -= grounded.min.y;
   return root.position.y;
+}
+
+function applyHoldPose(agent) {
+  if (!agent.health.alive) return;
+  agent.armRight?.quaternion.copy(HOLD_RIGHT);
+  agent.armLeft?.quaternion.copy(HOLD_LEFT);
+}
+
+function muzzlePoint(agent) {
+  if (agent.muzzle) {
+    agent.mesh.updateMatrixWorld(true);
+    agent.muzzle.getWorldPosition(MUZ);
+    return { x: MUZ.x, y: MUZ.y, z: MUZ.z };
+  }
+  return { x: agent.x, y: 1.15 * agent.cfg.scale, z: agent.z };
 }
 
 function moveToward(agent, tx, tz, speed, dt, blocked) {
@@ -94,11 +115,17 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
   const gltf = await loadSoldierGltf();
   const map = atlas();
   const clips = gltf.animations || [];
-  const walkClip =
+  const walkSrc =
     clips.find((clip) => clip.name === "walk") ||
     clips.find((clip) => /walk|sprint|run/i.test(clip.name)) ||
     clips[0] ||
     null;
+  const walkClip = walkSrc?.clone() || null;
+  if (walkClip) {
+    walkClip.tracks = walkClip.tracks.filter((track) => !/arm-(left|right)/i.test(track.name));
+  }
+  const holdClip = clips.find((clip) => clip.name === "holding-right") || null;
+  const shootClip = clips.find((clip) => clip.name === "holding-right-shoot") || null;
   const dieClip = clips.find((clip) => clip.name === "die") || null;
   const coverSlots = buildCoverSlots(occluders, blocked);
   const combat = { player: null, active: false, onShot: null };
@@ -114,6 +141,7 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     mesh.userData.patrol = true;
     mesh.userData.role = spec.role || "grunt";
     const footY = fitSoldier(mesh, cfg.scale);
+    const muzzle = attachHeldRifle(mesh);
     const route = spec.route || [];
     const start = route[0] || { x: 0, z: 0 };
     mesh.position.set(start.x, footY, start.z);
@@ -133,17 +161,29 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     mesh.add(hitbox);
     world.add(mesh);
 
-    const health = makeHealth("soldier", cfg.hp, cfg.respawn);
+    const health = makeHealth(spec.role === "boss" ? "boss" : "soldier", cfg.hp, cfg.respawn);
+    health.role = spec.role || "grunt";
     mesh.userData.health = health;
 
     let mixer = null;
     let walkAction = null;
+    let holdAction = null;
+    let shootAction = null;
     let dieAction = null;
-    if (walkClip || dieClip) {
+    if (walkClip || holdClip || shootClip || dieClip) {
       mixer = new AnimationMixer(mesh);
       if (walkClip) {
         walkAction = mixer.clipAction(walkClip);
         walkAction.play();
+      }
+      if (holdClip) {
+        holdAction = mixer.clipAction(holdClip);
+        holdAction.play();
+      }
+      if (shootClip) {
+        shootAction = mixer.clipAction(shootClip);
+        shootAction.setLoop(LoopOnce, 1);
+        shootAction.clampWhenFinished = true;
       }
       if (dieClip) {
         dieAction = mixer.clipAction(dieClip);
@@ -165,14 +205,23 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
       role: spec.role || "grunt",
       personality: spec.personality || "balanced",
       fireWait: 0.3 + Math.random() * 0.8,
+      muzzle,
+      flash: muzzle?.parent?.getObjectByName("muzzle-flash") || null,
+      armRight: mesh.getObjectByName("arm-right"),
+      armLeft: mesh.getObjectByName("arm-left"),
       muzzleLeft: 0,
       walkAction,
+      holdAction,
+      shootAction,
       dieAction,
     };
     resetBrain(agent);
 
     health.onKill = () => {
       walkAction?.stop();
+      holdAction?.stop();
+      shootAction?.stop();
+      if (agent.flash) agent.flash.visible = false;
       if (dieAction) {
         dieAction.reset();
         dieAction.play();
@@ -195,6 +244,8 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
       dieAction?.stop();
       walkAction?.reset();
       walkAction?.play();
+      holdAction?.reset();
+      holdAction?.play();
       resetBrain(agent);
     };
     return agent;
@@ -204,13 +255,19 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     if (agent.fireWait > 0 || !player) return;
     const gap = agent.cfg.fireGap;
     agent.fireWait = gap[0] + Math.random() * (gap[1] - gap[0]);
-    agent.muzzleLeft = 0.4;
+    agent.muzzleLeft = 0.12;
+    if (agent.flash) agent.flash.visible = true;
+    if (agent.shootAction) {
+      agent.shootAction.reset();
+      agent.shootAction.play();
+    }
     const chance = Math.max(0.2, agent.cfg.accuracy - (agent.lastDist || 14) / 110);
     const hit = Math.random() < chance;
+    const from = muzzlePoint(agent);
     combat.onShot?.({
-      x: agent.x,
-      y: 1.35 * agent.cfg.scale,
-      z: agent.z,
+      x: from.x,
+      y: from.y,
+      z: from.z,
       damage: hit ? agent.cfg.damage : 0,
       hit,
       role: agent.role,
@@ -221,8 +278,10 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     const player = combat.player;
     for (const agent of agents) {
       agent.mixer?.update(dt);
+      applyHoldPose(agent);
       tickHealth(agent.health, dt);
       agent.muzzleLeft = Math.max(0, (agent.muzzleLeft || 0) - dt);
+      if (agent.flash) agent.flash.visible = (agent.muzzleLeft || 0) > 0;
       agent.fireWait = Math.max(0, (agent.fireWait || 0) - dt);
       if (!agent.health.alive) continue;
       updateBrain(agent, dt, player, {
@@ -271,6 +330,16 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
         x: +agent.x.toFixed(2),
         z: +agent.z.toFixed(2),
       }));
+    },
+    guns() {
+      return agents.map((agent) => {
+        const from = muzzlePoint(agent);
+        return {
+          role: agent.role,
+          parent: agent.muzzle?.parent?.parent?.name || agent.muzzle?.parent?.name || null,
+          gunY: +from.y.toFixed(2),
+        };
+      });
     },
     raycast(origin, dir, far = 220) {
       const hits = [];

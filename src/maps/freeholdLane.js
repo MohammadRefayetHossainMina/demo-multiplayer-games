@@ -477,6 +477,10 @@ export const freeholdLane = {
         { role: "grunt", route: [{ x: 0, z: -48 }, { x: 0, z: -14 }] },
         { role: "grunt", route: [{ x: 48, z: 0 }, { x: 14, z: 0 }] },
         { role: "grunt", route: [{ x: -48, z: 0 }, { x: -14, z: 0 }] },
+        { role: "grunt", route: [{ x: 0, z: 8 }, { x: 0, z: -8 }] },
+        { role: "grunt", route: [{ x: 8, z: 0 }, { x: -8, z: 0 }] },
+        { role: "grunt", route: [{ x: 22, z: 38 }, { x: 22, z: 26 }] },
+        { role: "grunt", route: [{ x: -22, z: -38 }, { x: -22, z: -26 }] },
         {
           role: "tactical",
           personality: "aggressive",
@@ -493,6 +497,21 @@ export const freeholdLane = {
           route: [{ x: 20, z: -20 }, { x: 6, z: -20 }, { x: 20, z: -6 }],
         },
         {
+          role: "tactical",
+          personality: "aggressive",
+          route: [{ x: -20, z: 20 }, { x: -6, z: 20 }, { x: -20, z: 6 }],
+        },
+        {
+          role: "tactical",
+          personality: "defensive",
+          route: [{ x: 22, z: -8 }, { x: 40, z: 0 }, { x: 22, z: 8 }],
+        },
+        {
+          role: "tactical",
+          personality: "balanced",
+          route: [{ x: -40, z: 0 }, { x: -22, z: 8 }, { x: -22, z: -8 }],
+        },
+        {
           role: "boss",
           route: [
             { x: 0, z: -36 },
@@ -507,8 +526,8 @@ export const freeholdLane = {
     );
 
     const targets = createOrbs(world, [
-      { kind: "cyber", x: 0, y: 1.72, z: 12 },
-      { kind: "flaming", x: 0, y: 1.7, z: 26 },
+      { kind: "cyber", x: -14, y: 1.72, z: 16 },
+      { kind: "flaming", x: 14, y: 1.7, z: 22 },
       { kind: "water", x: 18, y: 1.68, z: 0 },
     ]);
 

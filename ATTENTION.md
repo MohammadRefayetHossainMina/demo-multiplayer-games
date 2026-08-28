@@ -56,7 +56,7 @@ Read: `index.html`, `styles.css`, `script.js`, and the four images. Nothing is s
 - Images are large PNGs (about 2 MB each). The homepage will load slowly on phones. Compress or convert to WebP before a real launch.
 - Fonts load from Google. The page needs internet for Rajdhani and IBM Plex Sans.
 - Empty leftover target: `<section id="demo">` exists only so old `#demo` links do not fail. Harmless.
-- Briefing overlay does not close on the Escape key (click Close or the dim background).
+- Briefing overlay closes on Escape, Close, or the dim background.
 - Public play URL is GitHub Pages: https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/
 
 ### What looks solid

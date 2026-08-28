@@ -76,7 +76,7 @@ export function applyDamage(health, amount) {
   if (killed) {
     health.alive = false;
     health.respawnLeft = health.respawnSec;
-    health.hideLeft = health.kind === "soldier" ? 1.15 : 0;
+    health.hideLeft = health.kind === "soldier" || health.kind === "boss" ? 1.15 : 0;
     health.onKill?.();
   } else {
     health.onHurt?.();
@@ -90,6 +90,7 @@ export function tickHealth(health, dt) {
     health.hideLeft -= dt;
     if (health.hideLeft <= 0) health.onHide?.();
   }
+  if (!(health.respawnSec > 0)) return false;
   health.respawnLeft -= dt;
   if (health.respawnLeft > 0) return false;
   health.alive = true;

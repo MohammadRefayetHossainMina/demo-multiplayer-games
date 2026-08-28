@@ -1,4 +1,4 @@
-import { PLAYER_MAX_HP, WIN_KILLS } from "../core/match.js";
+import { PLAYER_MAX_HP } from "../core/match.js";
 import { snapshotProgress } from "../core/progress.js";
 
 export function createHud(els) {
@@ -16,23 +16,21 @@ export function createHud(els) {
     els.overlay.hidden = false;
     if (els.title) {
       els.title.textContent = win
-        ? "Sector held"
+        ? "Boss down"
         : lose
           ? "Down"
           : paused
             ? "Paused"
-            : "Kill to Survive";
+            : "Kill the Boss";
     }
     if (els.body) {
       els.body.textContent = win
-        ? "Five drops. You still stand."
+        ? "The boss is down. You still stand."
         : lose
           ? "The lane took you. Drop again."
           : paused
             ? "Pointer unlocked. Resume to keep the fight."
-            : "You vs AI and a boss. Frag " +
-              WIN_KILLS +
-              " before they drop you. No second player.";
+            : "Hunt the boss. Grunts and tacticals guard the lane. No second player.";
     }
     if (els.xp) els.xp.textContent = extra || xpLine();
     if (els.matchBtn) {
@@ -52,7 +50,7 @@ export function createHud(els) {
     if (els.hpText) els.hpText.textContent = Math.ceil(state.hp) + " HP";
     if (els.kills) {
       els.kills.hidden = !live;
-      els.kills.textContent = state.kills + " / " + WIN_KILLS;
+      els.kills.textContent = "HUNT BOSS";
     }
     if (els.ammo) {
       els.ammo.hidden = !live;

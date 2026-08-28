@@ -1,79 +1,60 @@
-# Read this before starting the game
+# Read this before showing Dual Fire
 
-Do **not** start Phase 1 (Vite / Three.js) until you have read this file.
+This file is a landing-page and demo checklist. Dual Fire is a **solo vs AI** browser demo on Freehold Lane. There is no second human player.
 
-This is a landing-page review only. There is **no playable game** in this repo yet.
-
----
-
-## Real bugs (fix or accept before calling the site done)
-
-1. **Sticky header covers section titles**  
-   Jumping to Loadout, Intel, Tournament, or Views scrolls the heading under the nav. Needs `scroll-margin-top` (or extra top padding on those sections).
-
-2. **Views / comments can break**  
-   Comments are stored in `localStorage` (`dual-fire-views`). If storage is blocked (some private windows) or the saved value is not an array, loading or posting a view can fail and stop other script from running.
-
-3. **GitHub is behind this computer**  
-   Last push was `ATTENTION.md`. Later work (tactical HUD, prize copy with no dollar amount, briefing / loadout / intel / views JS) may not be on GitHub yet. Confirm `git status` and push if you want the remote to match.
+**Play:** https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/
 
 ---
 
-## Player-facing concerns (not crashes, but confusing)
+## Real issues (know these)
 
-4. **Play Demo does not play a game**  
-   It only opens an ops briefing overlay. The spec wants a WebGL demo and Pointer Lock. Do not advertise this as a live match until Phase 1+ exists.
+1. **Views stay on that browser only**  
+   Comments are stored in `localStorage` (`dual-fire-views`). You will not see other players’ reports. If storage is blocked, posting a view can fail.
 
-5. **“Demo live” is misleading**  
-   The red pill means the *page* is up, not that a match server or FPS demo is running.
+2. **Tournament is inactive**  
+   No countdown, no registration, no prize dollar amount. Copy only says a winner’s purse will be announced later.
 
-6. **You cannot see other players’ comments**  
-   Views stay in that browser only. They are not sent to GitHub, email, or a server. They will not help you gather real 99% feedback from the public.
-
-7. **Briefing overlay does not trap keyboard focus**  
-   Escape and Close work. Tab can still move to the page behind the overlay.
+3. **Demo 3D is temporary**  
+   Kenney houses and soldiers must be replaced before a commercial launch. See `ASSETS-DEMO.md` and `ATTENTION.md`.
 
 ---
 
-## Spec vs what exists (do not treat as done)
+## Player-facing notes
 
-From `PROJECT SPEC` (Dual Fire / Last Trigger, Three.js, Vite):
+4. **Play Demo** opens an ops briefing. **Enter Freehold Lane** loads the match. Click the game once so the mouse locks.
+
+5. The header pill is **Preview**. It means the site is up, not that a cash tournament is live.
+
+6. Sticky header can cover section titles when jumping to Loadout, Intel, Tournament, or Views.
+
+---
+
+## Spec vs what exists
 
 | Spec item | Status |
 |---|---|
-| Dual Fire landing page, Kill to Survive tone | Done (page only) |
-| Play Demo → fullscreen Pointer Lock / WebGL | **Not done** |
-| Flaming / Cyber / Water Orbs showcase | **Not done** |
-| Tournament countdown, A$ prize pool, registration | **Not done** (section exists, inactive, no amount) |
-| Vite, Three.js, Rapier, `/src` engine | **Not done** |
-| `Commercial.js` feature flags | **Not done** |
-| Phases 1–17 | **Not started** |
+| Dual Fire landing page, Kill to Survive tone | Done |
+| Play Demo → briefing → Freehold Lane match | Done |
+| Solo vs AI grunts, tacticals, and one boss | Done |
+| Win by killing the boss | Done |
+| Default rifle, CQC, pistol | Done |
+| Tournament countdown, prize amount, registration | Inactive (on purpose) |
+| Ranked 1v1 / second human | Not in this demo |
+| Flaming / Cyber / Water Orbs as the main fight | Dropped; leftover dummy orbs only |
+| Ads, shop, commercial flags | Off |
 
 ---
 
 ## Legal / commercial (also in ATTENTION.md)
 
 - AI images in `images/` are fine for this **demo**. Replace them before a **commercial** launch.
-- Name **Dual Fire** may overlap other games (e.g. Dual Fire Walled City on Steam). Clear the name before selling.
+- Name **Dual Fire** may overlap other games. Clear the name before selling.
 - Do not copy Critical Ops art, logo, or name.
 - Do not promise a live cash tournament until rules and a lawyer are in place.
 - This file is **not** legal advice.
 
 ---
 
-## Safe to ignore for now
-
-- Empty leftover `#demo` target in HTML
-- Large PNG files (slow load, not broken)
-- Google Fonts need internet (page still works without them)
-
----
-
 ## Next action
 
-When you are ready, say so and we can either:
-
-1. Fix items 1–3 on the landing page, **or**
-2. Begin **Phase 1: Vite + Three.js** (game foundation).
-
-Do not start both in the same sprint.
+Keep iterating the match and landing copy. Do not turn on commercial flags until launch.
