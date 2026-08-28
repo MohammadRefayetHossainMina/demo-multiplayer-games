@@ -12,7 +12,17 @@ const viewForm = document.getElementById("view-form");
 const viewList = document.getElementById("view-list");
 const viewCount = document.getElementById("view-count");
 const viewStatus = document.getElementById("view-status");
+const navToggle = document.getElementById("nav-toggle");
+const siteHeader = document.querySelector(".site-header");
+const siteNav = document.getElementById("site-nav");
 const VIEW_KEY = "dual-fire-views";
+
+let briefingOpener = null;
+
+function setNavOpen(open) {
+  siteHeader?.classList.toggle("is-nav-open", open);
+  navToggle?.setAttribute("aria-expanded", open ? "true" : "false");
+}
 
 // Shows or hides the ops briefing overlay.
 function toggleDemoBriefing(forceOpen) {
@@ -24,13 +34,18 @@ function toggleDemoBriefing(forceOpen) {
   demoBriefing.classList.toggle("is-open", shouldOpen);
 
   if (shouldOpen) {
+    briefingOpener = document.activeElement;
     demoBriefing.removeAttribute("hidden");
     playDemoButton.textContent = "Close Briefing";
     playDemoButton.setAttribute("aria-expanded", "true");
+    enterSectorButton?.focus();
   } else {
     demoBriefing.setAttribute("hidden", "");
     playDemoButton.textContent = "Play Demo";
     playDemoButton.setAttribute("aria-expanded", "false");
+    if (briefingOpener && typeof briefingOpener.focus === "function") {
+      briefingOpener.focus();
+    }
   }
 }
 
@@ -55,6 +70,7 @@ function toggleIntel(button) {
   const open = !card.classList.contains("is-open");
   card.classList.toggle("is-open", open);
   button.textContent = open ? "Close Intel" : "Open Intel";
+  button.setAttribute("aria-expanded", open ? "true" : "false");
 }
 
 function loadViews() {
@@ -142,7 +158,17 @@ demoBriefing.addEventListener("click", (event) => {
   if (event.target === demoBriefing) toggleDemoBriefing(false);
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") toggleDemoBriefing(false);
+  if (event.key === "Escape") {
+    if (!demoBriefing.hasAttribute("hidden")) toggleDemoBriefing(false);
+    else setNavOpen(false);
+  }
+});
+
+navToggle?.addEventListener("click", () => {
+  setNavOpen(!siteHeader.classList.contains("is-nav-open"));
+});
+siteNav?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => setNavOpen(false));
 });
 
 document.querySelectorAll(".weapon-thumb").forEach((thumb) => {

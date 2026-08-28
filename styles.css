@@ -178,6 +178,25 @@ textarea {
   border-top: 0;
 }
 
+.skip-link {
+  position: absolute;
+  left: var(--pad);
+  top: -4rem;
+  z-index: 40;
+  padding: 0.55rem 0.9rem;
+  background: var(--action);
+  color: var(--text);
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -190,6 +209,43 @@ textarea {
   background: rgba(11, 13, 12, 0.86);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+}
+
+.nav-toggle {
+  display: none;
+  appearance: none;
+  cursor: pointer;
+  justify-self: end;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--accent);
+  font-family: Rajdhani, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.btn-ghost {
+  color: var(--muted);
+  font-family: Rajdhani, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  color: var(--accent);
 }
 
 .nav-list {
@@ -294,8 +350,36 @@ textarea {
 }
 
 .site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
   padding: 2rem var(--pad) 3rem;
   border-top: 1px solid var(--line);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--accent);
+  font-family: Rajdhani, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--text);
 }
 
 /* ---------- Components ---------- */
@@ -477,6 +561,12 @@ h1 {
 .briefing-list {
   margin: 0 0 1.2rem;
   padding-left: 1.1rem;
+}
+
+.briefing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .section-intro {
@@ -849,9 +939,30 @@ kbd,
     grid-template-columns: 1fr auto;
   }
 
+  .nav-toggle {
+    display: inline-flex;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
   .site-nav {
+    display: none;
     grid-column: 1 / -1;
     order: 3;
+  }
+
+  .site-header.is-nav-open .site-nav {
+    display: block;
+  }
+
+  .site-header.is-nav-open .header-actions {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: flex-start;
   }
 
   .nav-list {

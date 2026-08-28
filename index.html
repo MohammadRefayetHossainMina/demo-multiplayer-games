@@ -6,8 +6,25 @@
     <title>Dual Fire | Kill to Survive</title>
     <meta
       name="description"
-      content="Dual Fire demo: one player versus AI soldiers and a boss on Freehold Lane. Tournament details later."
+      content="Dual Fire: solo vs AI tactical FPS demo. Hunt the boss on Freehold Lane. Play in the browser."
     />
+    <meta name="theme-color" content="#0B0D0C" />
+    <link rel="canonical" href="https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/" />
+    <meta property="og:title" content="Dual Fire | Kill to Survive" />
+    <meta
+      property="og:description"
+      content="Solo vs AI tactical FPS demo. Hunt the boss on Freehold Lane."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/"
+    />
+    <meta
+      property="og:image"
+      content="https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/images/hero-ops.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +35,7 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#hero">Skip to content</a>
     <div class="scanlines" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
@@ -25,22 +43,39 @@
       <span>Dual Fire</span>
       <span>Solo vs AI</span>
       <span>Equal kit</span>
-      <span>Official preview</span>
+      <span>Freehold Lane</span>
     </p>
 
     <header class="site-header">
       <a class="logo" href="#hero">DUAL<span>FIRE</span></a>
-      <nav class="site-nav" aria-label="Primary">
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul class="nav-list">
           <li><a href="#hero">Overview</a></li>
           <li><a href="#controls">Controls</a></li>
           <li><a href="#loadout">Loadout</a></li>
           <li><a href="#intel">Intel</a></li>
-          <li><a href="#tournament">Tournament</a></li>
           <li><a href="#views">Feedback</a></li>
         </ul>
       </nav>
-      <p class="live-pill"><span class="pulse"></span> Preview</p>
+      <div class="header-actions">
+        <a
+          class="btn-ghost"
+          href="https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <p class="live-pill"><span class="pulse"></span> Live demo</p>
+      </div>
     </header>
 
     <main>
@@ -63,7 +98,13 @@
             feedback so Dual Fire can close on 99%.
           </p>
           <div class="hero-actions">
-            <button type="button" id="play-demo-btn" class="btn-primary">
+            <button
+              type="button"
+              id="play-demo-btn"
+              class="btn-primary"
+              aria-expanded="false"
+              aria-controls="demo-briefing"
+            >
               Play Demo
             </button>
             <a class="btn-secondary" href="#views">Share your view</a>
@@ -71,17 +112,22 @@
           <ul class="stat-row">
             <li><strong>PvE</strong><span>You vs AI</span></li>
             <li><strong>03</strong><span>Default guns</span></li>
-            <li><strong>Prize</strong><span>Winner's purse</span></li>
+            <li><strong>Boss</strong><span>Hunt to win</span></li>
           </ul>
         </div>
       </section>
 
-      <section id="demo" class="sr-only-target" aria-hidden="true"></section>
-
-      <div id="demo-briefing" class="demo-briefing" hidden>
+      <div
+        id="demo-briefing"
+        class="demo-briefing"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="briefing-title"
+      >
         <div class="briefing-panel panel hud-panel">
           <p class="eyebrow">Ops briefing // demo access</p>
-          <h2>You drop with what command issued.</h2>
+          <h2 id="briefing-title">You drop with what command issued.</h2>
           <p>
             Demo facilities only. No unlocks. No paid skins. You spawn with the
             starter rifle, sidearm, and close-quarters kit. Survive the lane.
@@ -91,12 +137,14 @@
             <li>Hunt the boss. Grunts and tacticals respawn — the boss does not</li>
             <li>Standard map facilities — no elite rooms</li>
           </ul>
-          <button type="button" class="btn-secondary" id="enter-sector-btn">
-            Enter Freehold Lane
-          </button>
-          <button type="button" class="btn-secondary" id="close-briefing-btn">
-            Close briefing
-          </button>
+          <div class="briefing-actions">
+            <button type="button" class="btn-primary" id="enter-sector-btn">
+              Enter Freehold Lane
+            </button>
+            <button type="button" class="btn-secondary" id="close-briefing-btn">
+              Close briefing
+            </button>
+          </div>
         </div>
       </div>
 
@@ -110,9 +158,9 @@
             <p class="mode-kicker">01 · Primary</p>
             <h3>Kill to Survive</h3>
             <p>
-            You drop into the night sector alone. Kill the boss to win. Level 1
-            grunts and Level 2 tacticals hunt you. Ammo is counted. Corners are
-            fatal.
+              You drop into the night sector alone. Kill the boss to win. Level 1
+              grunts and Level 2 tacticals hunt you. Ammo is counted. Corners are
+              fatal.
             </p>
           </article>
           <article class="mode-card hud-panel">
@@ -125,7 +173,7 @@
           </article>
           <article class="mode-card hud-panel">
             <p class="mode-kicker">03 · Not live</p>
-            <h3>Prize bracket</h3>
+            <h3>Later: ranked play</h3>
             <p>
               Tournament is inactive. We will inform everyone once the game is
               ready for commercial release.
@@ -161,7 +209,7 @@
             <ul class="control-list">
               <li><kbd>W A S D</kbd> Move</li>
               <li><kbd>Space</kbd> Jump</li>
-              <li><kbd>Shift</kbd> Walk</li>
+              <li><kbd>Shift</kbd> Sprint</li>
             </ul>
           </div>
 
@@ -170,9 +218,9 @@
             <ul class="control-list">
               <li><kbd>Mouse</kbd> Look</li>
               <li><kbd>LMB</kbd> Fire</li>
-              <li><kbd>RMB</kbd> Aim</li>
+              <li><kbd>Wheel</kbd> Cycle guns</li>
               <li><kbd>R</kbd> Reload</li>
-              <li><kbd>1 2 3</kbd> Weapon select</li>
+              <li><kbd>1 2 3</kbd> ACR / CQC / Pistol</li>
             </ul>
           </div>
 
@@ -184,7 +232,7 @@
             </ul>
             <p class="section-intro">
               Click Play Demo, then Enter Freehold Lane for the night match.
-              Mouse wheel cycles weapons. Esc pauses.
+              Click the canvas once so the mouse locks.
             </p>
           </div>
         </div>
@@ -295,7 +343,7 @@
         <div class="intel-grid">
           <article class="intel-card panel hud-panel">
             <h3>FILE 01 — The rule</h3>
-            <button type="button" class="intel-toggle btn-secondary">
+            <button type="button" class="intel-toggle btn-secondary" aria-expanded="false">
               Open Intel
             </button>
             <div class="intel-body">
@@ -310,7 +358,7 @@
 
           <article class="intel-card panel hud-panel">
             <h3>FILE 02 — City after dark</h3>
-            <button type="button" class="intel-toggle btn-secondary">
+            <button type="button" class="intel-toggle btn-secondary" aria-expanded="false">
               Open Intel
             </button>
             <div class="intel-body">
@@ -324,7 +372,7 @@
 
           <article class="intel-card panel hud-panel">
             <h3>FILE 03 — Why the demo is limited</h3>
-            <button type="button" class="intel-toggle btn-secondary">
+            <button type="button" class="intel-toggle btn-secondary" aria-expanded="false">
               Open Intel
             </button>
             <div class="intel-body">
@@ -342,7 +390,7 @@
         <div class="prize panel is-inactive hud-panel">
           <p class="eyebrow">EVT-04 · Inactive · not live</p>
           <h2>End-of-month tournament</h2>
-          <p class="prize-amount">Winner takes the purse</p>
+          <p class="prize-amount">Not open yet</p>
           <p class="prize-copy">
             This demo is solo versus AI. Ranked 1v1 is a later commercial
             event — details to be announced. The event is not active yet.
@@ -411,8 +459,24 @@
     </main>
 
     <footer class="site-footer">
-      <p>Dual Fire — solo vs AI demo. Default guns and facilities only.</p>
-      <p>Freehold Lane demo is playable. Feedback welcome.</p>
+      <div class="footer-copy">
+        <p>Dual Fire — solo vs AI demo. Default guns and facilities only.</p>
+        <p>Freehold Lane demo is playable. Feedback welcome.</p>
+      </div>
+      <ul class="footer-links">
+        <li>
+          <a href="https://mohammadrefayethossainmina.github.io/demo-multiplayer-games/">Play</a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games"
+            rel="noopener noreferrer"
+            >Source</a
+          >
+        </li>
+        <li><a href="#controls">Controls</a></li>
+        <li><a href="#views">Feedback</a></li>
+      </ul>
     </footer>
   </body>
 </html>
