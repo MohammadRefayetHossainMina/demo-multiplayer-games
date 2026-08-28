@@ -4,6 +4,8 @@ Tactical **1v1** browser shooter. Kill to survive.
 
 **Repository:** https://github.com/MohammadRefayetHossainMina/demo-multiplayer-games
 
+**Play:** see [How to start playing](HOW-TO-START-PLAYING.md). There is no public Vercel/Netlify URL yet.
+
 ---
 
 ## Status
@@ -76,6 +78,7 @@ That writes the landing page and the game (`dist/play`) for **Vercel** or **Netl
 
 | Path | Description |
 | --- | --- |
+| `HOW-TO-START-PLAYING.md` | How to run the landing page and match |
 | `index.html` | Preview landing page |
 | `src/` | Three.js match, HUD, Freehold Lane |
 | `server/ws.mjs` | Anonymous WebSocket pose relay |
