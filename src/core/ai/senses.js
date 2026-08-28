@@ -32,7 +32,9 @@ export function sampleSense(agent, player, blocked, losBoxes) {
   const dz = player.z - agent.z;
   const dist = Math.hypot(dx, dz);
   const combat =
-    agent.state && agent.state !== "idle" && agent.state !== "patrol" && agent.state !== "dead";
+    (agent.state && agent.state !== "idle" && agent.state !== "patrol" && agent.state !== "dead") ||
+    (agent.alerted || 0) > 0 ||
+    (agent.underFire || 0) > 0;
   if (dist > cfg.detectRange && !combat) {
     return {
       dx,

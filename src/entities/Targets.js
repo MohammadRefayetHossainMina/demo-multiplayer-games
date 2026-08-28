@@ -3,7 +3,7 @@ import { AdditiveBlending, Color, EdgesGeometry, Group, IcosahedronGeometry, Lin
 export const ORB_KINDS = {
   flaming: {
     hp: 54,
-    respawn: 3.6,
+    respawn: 0,
     color: 0xff6a1a,
     emissive: 0xff3b00,
     light: 0xff6a22,
@@ -12,7 +12,7 @@ export const ORB_KINDS = {
   },
   cyber: {
     hp: 72,
-    respawn: 4.2,
+    respawn: 0,
     color: 0x1ad6ff,
     emissive: 0x00b8ff,
     light: 0x3cf0ff,
@@ -21,7 +21,7 @@ export const ORB_KINDS = {
   },
   water: {
     hp: 36,
-    respawn: 3.2,
+    respawn: 0,
     color: 0x4aa8ff,
     emissive: 0x1a6cff,
     light: 0x7ec8ff,

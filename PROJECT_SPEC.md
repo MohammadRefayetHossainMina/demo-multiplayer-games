@@ -37,7 +37,7 @@ This demo is **solo vs AI**. There is no second human player.
 
 ### Kill to Survive (story and loadout)
 
-- You drop in alone. Win by killing the **boss**. Grunts and tacticals respawn; the boss does not.
+- You drop in alone. Win by killing the **boss**. Nobody respawns.
 - Default kit only: rifle, CQC, pistol. No unlocks and no paid skins in this demo.
 - Intel cards cover the lane, equal loadout, and why the tournament is still inactive.
 

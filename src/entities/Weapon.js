@@ -486,6 +486,17 @@ export function createViewWeapon(camera, { world, scene, onKick, onShot, onReloa
     debugReload() {
       beginReload();
     },
+    collectAmmo({ acr = 0, cqc = 0, pistol = 0 } = {}) {
+      const cap = (slotId) => LOADOUT[slotId].reserve * 2;
+      ammo[1].reserve = Math.min(cap(1), ammo[1].reserve + acr);
+      ammo[2].reserve = Math.min(cap(2), ammo[2].reserve + cqc);
+      ammo[3].reserve = Math.min(cap(3), ammo[3].reserve + pistol);
+      return {
+        acr: ammo[1].reserve,
+        cqc: ammo[2].reserve,
+        pistol: ammo[3].reserve,
+      };
+    },
     resetLoadout() {
       Object.assign(ammo, makeAmmo());
       slot = 1;

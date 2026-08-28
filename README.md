@@ -8,7 +8,7 @@
   <img src="images/hero-ops.png" alt="Dual Fire night-ops briefing — one operator on a rain-soaked industrial street" width="920">
 </p>
 
-You drop into **Freehold Lane** alone. Hostile AI soldiers hunt you. **Kill the boss to win.** Grunts and tacticals respawn; the boss does not. There is no second human player in this build — the repository name is leftover from an earlier plan.
+You drop into **Freehold Lane** alone. Hostile AI soldiers hunt you. **Kill the boss to win.** Nobody respawns. There is no second human player in this build — the repository name is leftover from an earlier plan.
 
 ---
 

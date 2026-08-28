@@ -13,7 +13,7 @@ Soldiers are driven by `src/core/ai/` plus `src/core/patrol.js` (body, mesh, sho
 | Vehicles, crates, concrete barriers as cover | Houses and wall **blockers** on Freehold Lane. Cover = stand next to a house footprint so `blocked()` breaks LOS. |
 | Navmesh / pathfinding | None. Movement is waypoint walk + `blocked(x,z)`. Chase/cover must stay on walkable ground or soldiers stick in walls. |
 | Perfect 15-state Level 2 machine | Too many named states for one upgrade. Level 2 should **add decisions** on top of Level 1 states, not replace them with 15 labels. |
-| Dead forever | Demo **respawns** soldiers. `Dead` is a short state, then respawn / return to `Idle`. |
+| Dead forever | Soldiers **stay down**. `Dead` hides the body. A new match / restart restores them. |
 | New enemy types | Keep the **three Kenney soldiers**. Level 1 = all three. Level 2 = personality on those three. Level 3 = one of them (or a fourth) as boss when the prompt is complete. |
 | Hear footsteps / 360 detect | Keep **front cone + distance + LOS**. Hearing can wait. |
 | “Being shot at” | Player hits already go through `applyDamage`. AI does not get an **under fire** flag yet — that must be added for cover/strafe. |
@@ -65,7 +65,7 @@ brain      state + one update() per frame
 | Chase | Walk toward last seen / closer fight range | In range + LOS → Attack; lost → Search |
 | Attack | Face, burst fire, small strafe if under fire | Out of range → Chase; lost LOS → Search; hp 0 → Dead |
 | Search | Walk last seen, look around | See player → Alert; timeout → Patrol |
-| Dead | Die clip | Respawn → Idle |
+| Dead | Die clip | Stay dead until match reset |
 
 ### Transitions
 
@@ -81,7 +81,7 @@ Chase → Search          (LOS broken)
 Search → Alert          (see player again)
 Search → Patrol         (search timer)
 any combat → Dead       (hp 0)
-Dead → Idle             (respawn)
+Dead                    (stay dead until reset)
 ```
 
 Level 2 later **only** replaces how Alert/Attack pick a goal (cover vs push). Same states, smarter `evaluate()`.

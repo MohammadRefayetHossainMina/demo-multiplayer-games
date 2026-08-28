@@ -30,7 +30,7 @@ export function createHud(els) {
           ? "The lane took you. Drop again."
           : paused
             ? "Pointer unlocked. Resume to keep the fight."
-            : "Hunt the boss. Grunts and tacticals guard the lane. No second player.";
+            : "Hunt the boss. Walk the gold crates for ammo. Nobody respawns.";
     }
     if (els.xp) els.xp.textContent = extra || xpLine();
     if (els.matchBtn) {
@@ -60,7 +60,7 @@ export function createHud(els) {
     if (els.hud) {
       els.hud.hidden = !live;
       els.hud.textContent =
-        "LMB shoot · R reload · 1 ACR · 2 CQC · 3 Pistol · " +
+        "LMB shoot · R reload · walk crates for ammo · " +
         (state.weapon || "ACR") +
         " · Esc";
     }
@@ -78,5 +78,17 @@ export function createHud(els) {
     }
   }
 
-  return { showOverlay, hideOverlay, paint, xpLine };
+  let toastTimer = 0;
+  function toast(text) {
+    if (!els.pickup) return;
+    els.pickup.hidden = false;
+    els.pickup.textContent = text;
+    els.pickup.classList.add("on");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      els.pickup.classList.remove("on");
+    }, 1700);
+  }
+
+  return { showOverlay, hideOverlay, paint, xpLine, toast };
 }

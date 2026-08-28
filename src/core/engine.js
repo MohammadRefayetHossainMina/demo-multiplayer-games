@@ -41,6 +41,7 @@ export function createEngine(canvas) {
   let walkBounds = { minx: -12, maxx: 12, minz: -12, maxz: 12 };
   let patrol = { step() {}, blips: () => [], list: () => [] };
   let targets = { step() {}, blips: () => [], list: () => [] };
+  let ammo = { step() {}, blips: () => [], reset() {} };
   let minimap = { roads: [], buildings: [] };
   let fogFar = 80;
   let preview = {
@@ -201,6 +202,7 @@ export function createEngine(canvas) {
     walkBounds = result.walkBounds || walkBounds;
     patrol = result.patrol || { step() {}, blips: () => [], list: () => [] };
     targets = result.targets || { step() {}, blips: () => [], list: () => [] };
+    ammo = result.ammo || { step() {}, blips: () => [], reset() {} };
     minimap = result.minimap || { roads: [], buildings: [] };
     preview = result.preview;
     fogFar = result.fogFar;
@@ -238,6 +240,7 @@ export function createEngine(canvas) {
     getMinimap: () => minimap,
     getAiBlips: () => patrol.blips?.() || [],
     getOrbBlips: () => targets.blips?.() || [],
+    getAmmoBlips: () => ammo.blips?.() || [],
     getPatrolList: () => patrol.list?.() || [],
     getTargetList: () => targets.list?.() || [],
     raycastCombat(origin, dir, far = 220) {
@@ -247,6 +250,7 @@ export function createEngine(canvas) {
     },
     getPatrol: () => patrol,
     getTargets: () => targets,
+    getAmmoPacks: () => ammo,
     getWorld: () => world,
     getScene: () => scene,
     onMode(fn) {

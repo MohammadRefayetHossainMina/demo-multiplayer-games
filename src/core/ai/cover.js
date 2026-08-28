@@ -2,7 +2,7 @@ import { clearShot } from "./senses.js";
 
 export function buildCoverSlots(buildings, blocked) {
   const slots = [];
-  const pad = 2.1;
+  const pad = 2.85;
   const list = buildings || [];
   for (const box of list) {
     const cx = (box.minx + box.maxx) * 0.5;

@@ -20,6 +20,7 @@ import cone from "../assets/kenney/roads/construction-cone.glb?url";
 import { placeKenney } from "./kenneyLoader.js";
 import { createPatrols } from "../core/patrol.js";
 import { createOrbs } from "../entities/Targets.js";
+import { createAmmoPacks } from "../entities/ammoPacks.js";
 import { addMudCross, muddyRoadMaterial } from "./muddyRoad.js";
 
 const SCALE = 8;
@@ -450,22 +451,50 @@ export const freeholdLane = {
     world.add(moon);
 
     const limits = { minx: -65.7, maxx: 65.7, minz: -61.8, maxz: 61.8 };
-    const blocked = (x, z) => {
-      if (x < limits.minx || x > limits.maxx || z < limits.minz || z > limits.maxz) {
-        return true;
-      }
-      const r = 0.22;
+    function inAabb(px, pz, box, pad = 0) {
+      return (
+        px >= box.minx - pad &&
+        px <= box.maxx + pad &&
+        pz >= box.minz - pad &&
+        pz <= box.maxz + pad
+      );
+    }
+    function sampleHit(x, z, radius, test) {
+      const r = radius;
       const spots = [
         [x, z],
         [x + r, z],
         [x - r, z],
         [x, z + r],
         [x, z - r],
+        [x + r * 0.72, z + r * 0.72],
+        [x + r * 0.72, z - r * 0.72],
+        [x - r * 0.72, z + r * 0.72],
+        [x - r * 0.72, z - r * 0.72],
       ];
-      return spots.some(([px, pz]) =>
-        blockers.some(
-          (box) => px >= box.minx && px <= box.maxx && pz >= box.minz && pz <= box.maxz
-        )
+      return spots.some(([px, pz]) => test(px, pz));
+    }
+    const blocked = (x, z) => {
+      if (x < limits.minx || x > limits.maxx || z < limits.minz || z > limits.maxz) {
+        return true;
+      }
+      return sampleHit(x, z, 0.22, (px, pz) =>
+        blockers.some((box) => inAabb(px, pz, box))
+      );
+    };
+    const aiBlocked = (x, z) => {
+      const edge = 0.9;
+      if (
+        x < limits.minx + edge ||
+        x > limits.maxx - edge ||
+        z < limits.minz + edge ||
+        z > limits.maxz - edge
+      ) {
+        return true;
+      }
+      return sampleHit(x, z, 0.72, (px, pz) =>
+        footprints.some((box) => inAabb(px, pz, box, 0.55)) ||
+        blockers.some((box) => inAabb(px, pz, box, 0.25))
       );
     };
 
@@ -481,6 +510,14 @@ export const freeholdLane = {
         { role: "grunt", route: [{ x: 8, z: 0 }, { x: -8, z: 0 }] },
         { role: "grunt", route: [{ x: 22, z: 38 }, { x: 22, z: 26 }] },
         { role: "grunt", route: [{ x: -22, z: -38 }, { x: -22, z: -26 }] },
+        { role: "grunt", route: [{ x: 40, z: 32 }, { x: 14, z: 32 }] },
+        { role: "grunt", route: [{ x: -40, z: 32 }, { x: -14, z: 32 }] },
+        { role: "grunt", route: [{ x: 40, z: -32 }, { x: 14, z: -32 }] },
+        { role: "grunt", route: [{ x: -40, z: -32 }, { x: -14, z: -32 }] },
+        { role: "grunt", route: [{ x: 32, z: 48 }, { x: 32, z: 18 }] },
+        { role: "grunt", route: [{ x: -32, z: 48 }, { x: -32, z: 18 }] },
+        { role: "grunt", route: [{ x: 32, z: -48 }, { x: 32, z: -18 }] },
+        { role: "grunt", route: [{ x: -32, z: -48 }, { x: -32, z: -18 }] },
         {
           role: "tactical",
           personality: "aggressive",
@@ -512,6 +549,26 @@ export const freeholdLane = {
           route: [{ x: -40, z: 0 }, { x: -22, z: 8 }, { x: -22, z: -8 }],
         },
         {
+          role: "tactical",
+          personality: "aggressive",
+          route: [{ x: 8, z: 32 }, { x: 22, z: 32 }, { x: 8, z: 18 }],
+        },
+        {
+          role: "tactical",
+          personality: "defensive",
+          route: [{ x: -8, z: -32 }, { x: -22, z: -32 }, { x: -8, z: -18 }],
+        },
+        {
+          role: "tactical",
+          personality: "balanced",
+          route: [{ x: 32, z: 8 }, { x: 32, z: -8 }, { x: 18, z: 8 }],
+        },
+        {
+          role: "tactical",
+          personality: "aggressive",
+          route: [{ x: -32, z: -8 }, { x: -32, z: 8 }, { x: -18, z: -8 }],
+        },
+        {
           role: "boss",
           route: [
             { x: 0, z: -36 },
@@ -521,7 +578,7 @@ export const freeholdLane = {
           ],
         },
       ],
-      blocked,
+      aiBlocked,
       footprints
     );
 
@@ -530,11 +587,20 @@ export const freeholdLane = {
       { kind: "flaming", x: 14, y: 1.7, z: 22 },
       { kind: "water", x: 18, y: 1.68, z: 0 },
     ]);
+    const ammo = createAmmoPacks(world, [
+      { x: 0, z: 36 },
+      { x: 36, z: 0 },
+      { x: -36, z: 0 },
+      { x: 0, z: -36 },
+      { x: 12, z: 12 },
+      { x: -12, z: -12 },
+    ]);
 
     return {
       blocked,
       patrol,
       targets,
+      ammo,
       minimap: {
         lot: { minx: -84, maxx: 84, minz: -78, maxz: 78 },
         roads: [

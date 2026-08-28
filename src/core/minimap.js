@@ -96,6 +96,14 @@ export function createMinimap(canvas) {
       ctx.fill();
     }
 
+    for (const blip of state.ammo || []) {
+      const p = project(blip.x, blip.z, bounds, w, h);
+      ctx.beginPath();
+      ctx.fillStyle = "#c4a35a";
+      ctx.rect(p.x - 4, p.y - 4, 8, 8);
+      ctx.fill();
+    }
+
     if (state.player) {
       const p = project(state.player.x, state.player.z, bounds, w, h);
       const yaw = state.player.yaw || 0;

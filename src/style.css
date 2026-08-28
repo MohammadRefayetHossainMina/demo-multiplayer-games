@@ -185,6 +185,29 @@ h1 {
   color: #d45b5b;
 }
 
+.pickup {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  top: 18%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(196, 163, 90, 0.55);
+  background: rgba(21, 26, 23, 0.9);
+  color: #c4a35a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.pickup.on {
+  opacity: 1;
+}
+
 .minimap {
   position: fixed;
   z-index: 4;

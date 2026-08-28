@@ -5,7 +5,7 @@ import soldierUrl from "../assets/kenney/soldiers/character-soldier.glb?url";
 import soldierAtlasUrl from "../assets/kenney/soldiers/colormap.png?url";
 import { makeHealth, raySphere, tickHealth } from "../entities/Targets.js";
 import { attachHeldRifle } from "../entities/heldRifle.js";
-import { resetBrain, updateBrain } from "./ai/brain.js";
+import { alertAllies, resetBrain, updateBrain } from "./ai/brain.js";
 import { roleConfig } from "./ai/config.js";
 import { buildCoverSlots } from "./ai/cover.js";
 
@@ -89,19 +89,33 @@ function muzzlePoint(agent) {
 }
 
 function moveToward(agent, tx, tz, speed, dt, blocked) {
+  if (blocked(agent.x, agent.z)) {
+    const open = findOpen(blocked, agent.x, agent.z);
+    agent.x = open.x;
+    agent.z = open.z;
+  }
   const dx = tx - agent.x;
   const dz = tz - agent.z;
   const dist = Math.hypot(dx, dz);
   if (dist < 0.4) return true;
-  const nx = agent.x + (dx / dist) * speed * dt;
-  const nz = agent.z + (dz / dist) * speed * dt;
-  if (!blocked(nx, nz)) {
-    agent.x = nx;
-    agent.z = nz;
-  } else if (!blocked(nx, agent.z)) {
-    agent.x = nx;
-  } else if (!blocked(agent.x, nz)) {
-    agent.z = nz;
+  const step = Math.min(speed * dt, dist);
+  const ux = dx / dist;
+  const uz = dz / dist;
+  const tries = [
+    [ux, uz],
+    [ux * 0.75 - uz * 0.66, uz * 0.75 + ux * 0.66],
+    [ux * 0.75 + uz * 0.66, uz * 0.75 - ux * 0.66],
+    [-uz, ux],
+    [uz, -ux],
+  ];
+  for (const [vx, vz] of tries) {
+    const nx = agent.x + vx * step;
+    const nz = agent.z + vz * step;
+    if (!blocked(nx, nz)) {
+      agent.x = nx;
+      agent.z = nz;
+      break;
+    }
   }
   agent.mesh.position.x = agent.x;
   agent.mesh.position.z = agent.z;
@@ -109,6 +123,20 @@ function moveToward(agent, tx, tz, speed, dt, blocked) {
     agent.mesh.rotation.y = Math.atan2(dx, dz);
   }
   return false;
+}
+
+function findOpen(blocked, x, z) {
+  if (typeof blocked !== "function" || !blocked(x, z)) return { x, z };
+  for (let ring = 0.5; ring <= 16; ring += 0.5) {
+    const steps = 14;
+    for (let i = 0; i < steps; i += 1) {
+      const a = (i / steps) * Math.PI * 2;
+      const nx = x + Math.cos(a) * ring;
+      const nz = z + Math.sin(a) * ring;
+      if (!blocked(nx, nz)) return { x: nx, z: nz };
+    }
+  }
+  return { x, z };
 }
 
 export async function createPatrols(THREE, world, squad, blocked, occluders = []) {
@@ -142,8 +170,8 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     mesh.userData.role = spec.role || "grunt";
     const footY = fitSoldier(mesh, cfg.scale);
     const muzzle = attachHeldRifle(mesh);
-    const route = spec.route || [];
-    const start = route[0] || { x: 0, z: 0 };
+    const route = (spec.route || []).map((point) => findOpen(blocked, point.x, point.z));
+    const start = route[0] || findOpen(blocked, 0, 0);
     mesh.position.set(start.x, footY, start.z);
     mesh.rotation.y = 0;
     const hitbox = new Mesh(
@@ -307,7 +335,8 @@ export async function createPatrols(THREE, world, squad, blocked, occluders = []
     },
     markFire(health) {
       const agent = agents.find((item) => item.health === health);
-      if (agent) agent.underFire = 0.9;
+      if (!agent) return;
+      alertAllies(agents, agent, combat.player);
     },
     blips() {
       return agents

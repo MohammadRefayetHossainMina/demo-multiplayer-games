@@ -98,6 +98,7 @@ const hud = createHud({
   hpText: document.getElementById("hp-text"),
   kills: document.getElementById("kills"),
   ammo: document.getElementById("ammo"),
+  pickup: document.getElementById("pickup"),
   hud: document.getElementById("hud"),
   crosshair: document.getElementById("crosshair"),
   hurt: document.getElementById("hurt"),
@@ -117,6 +118,7 @@ function shotAngle(player, yaw, x, z) {
 function resetWorldCombat() {
   engine.getPatrol()?.reset?.();
   engine.getTargets()?.reset?.();
+  engine.getAmmoPacks()?.reset?.();
   weapon.resetLoadout();
 }
 
@@ -276,6 +278,12 @@ engine.onFrame((dt, ctx) => {
   });
 
   incomingFx.step(dt);
+  if (live || match.roam) {
+    engine.getAmmoPacks()?.step?.(dt, ctx.camera.position, (pack) => {
+      weapon.collectAmmo(pack);
+      hud.toast("Ammo crate +30 / +25 / +12");
+    });
+  }
   hitFlash = Math.max(0, hitFlash - dt);
   hurtFlash = Math.max(0, hurtFlash - dt);
   incomingLife = Math.max(0, incomingLife - dt);
@@ -314,6 +322,7 @@ engine.onFrame((dt, ctx) => {
     },
     ai: engine.getAiBlips(),
     orbs: engine.getOrbBlips(),
+    ammo: engine.getAmmoBlips(),
   });
 
 });
